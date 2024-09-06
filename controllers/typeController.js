@@ -6,7 +6,6 @@ class Controller {
     async createNewType(req, res, next){
         try{
            const {name} = req.body;
-           console.log(name)
         const type = await Type.create({name});
         return res.json(type); 
         }

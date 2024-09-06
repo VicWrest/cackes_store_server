@@ -15,9 +15,13 @@ const Order = sequelize.define('order', {
     isCompleted: {type: DataTypes.BOOLEAN, defaultValue: false}
 })
 
-const OrderProduct = sequelize.define('order_product', {
+const OrderItem = sequelize.define('order_item', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    date: {type: DataTypes.DATE, allowNull: false}
+    productName: {type: DataTypes.STRING, allowNull: false},
+    quantity: {type: DataTypes.INTEGER, allowNull: false},
+    weight: {type: DataTypes.STRING, allowNull: false},
+    price: {type: DataTypes.INTEGER, allowNull: false},
+    korzhName: {type: DataTypes.STRING, allowNull: false}
 });
 
 const Basket = sequelize.define('basket', {
@@ -25,7 +29,7 @@ const Basket = sequelize.define('basket', {
 })
 const BasketProduct = sequelize.define('basket_product', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    quantity: {type: DataTypes.INTEGER}
+    quantity: {type: DataTypes.INTEGER, allowNull: false}
 })
 const Product = sequelize.define('product', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
@@ -37,6 +41,12 @@ const Product = sequelize.define('product', {
 const Korzh = sequelize.define('korzh', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, unique: true, allowNull: false},
+})
+
+const Weight = sequelize.define('weight', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    value: {type: DataTypes.STRING, allowNull: false},
+    price: {type: DataTypes.INTEGER, allowNull: false}
 })
 
 const Type = sequelize.define('type', {
@@ -59,35 +69,45 @@ const ProductInfo = sequelize.define('product_info', {
     description: {type: DataTypes.STRING, allowNull: false},
 })
 
-//расшифровка записи:
-//модель user имеет одну модель order,
-//модель order принадлежит модели user
-User.hasMany(Order)
+
+User.hasMany(Order, {
+    onDelete: "CASCADE"
+})
 Order.belongsTo(User)
 
-User.hasMany(Review)
+User.hasMany(Review, {
+    onDelete: "CASCADE"
+})
 Review.belongsTo(User)
 
-Order.belongsToMany(Product, {through: OrderProduct});
-Product.belongsToMany(Order, {through: OrderProduct});
+Order.hasMany(OrderItem, {
+    onDelete: "CASCADE"
+});
+OrderItem.belongsTo(Order);
 
 Basket.belongsToMany(Product, {
     onDelete: "CASCADE",
     through: BasketProduct});
 Product.belongsToMany(Basket, {through: BasketProduct});
 
-BasketProduct
-
-Type.hasMany(Product)
+Type.hasMany(Product, {
+    onDelete: "CASCADE"
+})
 Product.belongsTo(Type)
 
-Korzh.hasMany(Product)
-Product.belongsTo(Korzh)
+Product.hasMany(Weight, {
+    onDelete: "CASCADE"
+})
+Weight.belongsTo(Product)
 
-Korzh.hasMany(BasketProduct)
+Korzh.hasMany(BasketProduct, {
+    onDelete: "CASCADE"
+})
 BasketProduct.belongsTo(Korzh)
 
-Product.hasMany(ProductInfo, {as: 'info'});
+Product.hasMany(ProductInfo, {as: 'info',
+        onDelete: "CASCADE"
+});
 ProductInfo.belongsTo(Product)
 
 User.hasOne(Basket);
@@ -95,7 +115,7 @@ User.hasOne(Basket);
 module.exports = {
     User,
     Order,
-    OrderProduct,
+    OrderItem,
     Product,
     Type,
     Korzh,
