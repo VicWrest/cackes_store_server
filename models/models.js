@@ -8,10 +8,13 @@ const User = sequelize.define('user', {
 })
 
 const Order = sequelize.define('order', {
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true}
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    date: {type: DataTypes.DATE, allowNull: false},
+    summa: {type: DataTypes.INTEGER, allowNull: false},
+    phone: {type: DataTypes.STRING, allowNull: false},
+    isCompleted: {type: DataTypes.BOOLEAN, defaultValue: false}
 })
-////
-////
+
 const OrderProduct = sequelize.define('order_product', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     date: {type: DataTypes.DATE, allowNull: false}
