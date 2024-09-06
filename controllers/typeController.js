@@ -1,13 +1,19 @@
 const { connectionManager } = require("../db/db");
 const ApiError = require("../error/ApiError");
 const { Type } = require("../models/models");
+const productService = require("../service/productService");
 
 class Controller {
     async createNewType(req, res, next){
         try{
-           const {name} = req.body;
-        const type = await Type.create({name});
-        return res.json(type); 
+            const {name} = req.body;
+            const img = req.files?.img;
+            const type = await Type.create({name});
+            if(img) {
+                const newType = await productService.downloadImg(type, img);  
+                return newType;
+            }
+            return res.json(type); 
         }
         catch(err){
             console.log(err);

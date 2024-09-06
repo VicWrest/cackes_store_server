@@ -15,16 +15,16 @@ class UserService {
         const token =  tokenService.generateToken(addedUser.id, addedUser.name, addedUser.role)
 		return token;
 	}
-	async login(user) {
+	async login(data) {
 		try{
-		const { userName} = user;
+		const { userName} = data;
         const user = await User.findOne({where: {name: userName}})
 		if(!user) {
             return await this.registration(user);
 		};
 		
-		const token = await tokenService.generateToken(user.id, user.name, user.role)
-		return token;
+		const token = await tokenService.generateToken(user.id, user.name, user.role);
+		return {token};
 		}
 		catch(e) {
 			console.log(e);

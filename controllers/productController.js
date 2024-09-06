@@ -73,7 +73,7 @@ class Controller{
             next(ApiError.badRequest("Ошибка получения товара"));
     };
    };
-   
+   //отдельная загрузка фото не реализована на фронте
    async uploadImg(req, res, next){
       try{
          const {id} = req.id;
