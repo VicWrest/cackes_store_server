@@ -10,7 +10,7 @@ class Controller {
             const img = req.files?.img;
             const type = await Type.create({name});
             if(img) {
-                const newType = await productService.downloadImg(type, img);  
+                const newType = await productService.downloadImg(type, img, `typesPhoto`);  
                 return newType;
             }
             return res.json(type); 
@@ -29,6 +29,19 @@ class Controller {
         catch(err){
             console.log(err);
             next(ApiError.badRequest("Не удалось получить категории"));
+        }
+    }
+
+    async deleteOneType(req, res, next){
+        try{
+            let {id} = req.params;
+            console.log(req.params)
+            const deletedType = await Type.destroy({where: {id: Number(id)}});
+            const response = await Type.findAll();
+            res.status(200).json(response);
+        }
+        catch(err){
+            next(ApiError.badRequest("Серверная ошибка при удалении коржа"))
         }
     }
 };

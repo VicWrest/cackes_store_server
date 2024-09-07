@@ -33,9 +33,11 @@ const BasketProduct = sequelize.define('basket_product', {
 })
 const Product = sequelize.define('product', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    name: {type: DataTypes.STRING, allowNull: false},
-    price: {type: DataTypes.INTEGER, allowNull: false},
-    img: {type: DataTypes.STRING, allowNull: true}
+    name: {type: DataTypes.STRING, allowNull: false, unique: true},
+    img: {type: DataTypes.STRING, allowNull: true},
+    description: { type: DataTypes.TEXT, allowNull: true},
+    shortdescription: { type: DataTypes.TEXT, allowNull: true}
+
 })
 
 const Korzh = sequelize.define('korzh', {
@@ -123,5 +125,6 @@ module.exports = {
     Review,
     ProductInfo, 
     Basket,
-    BasketProduct
+    BasketProduct,
+    Weight
 };
