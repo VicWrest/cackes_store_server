@@ -1,34 +1,27 @@
+const { compareSync } = require("bcryptjs");
 const ApiError = require("../error/ApiError");
 const { Product, Basket, BasketProduct } = require("../models/models");
+const { addProductInBasket, getProducts } = require("../service/basketService");
 
 
 class Controller {
-    //получаем с фронта productId, тип коржа, количество товара
     async addProductInBasket(req, res, next){
         try{
             const user = req.user;
-        const {id} = req.body;
-        //нет свзяи между user и basket
-        let basket = await Basket.findOne({where: {userId: user.id}});
-        if(!basket){
-            basket = await Basket.create({userId: user.id});
-        }
-        const prodById = await Product.findOne({where: {id: id}});
-        const userBasket = await basket.addProduct(prodById);
-        return res.json(userBasket);
+            const {productId, korzhId, weightId} = req.body;
+            const addedProducts = await addProductInBasket({user, productId, korzhId, weightId});
+            return res.json(addedProducts);
         }
         catch(err){
+            console.log(err)
             next(ApiError.badRequest("Серверная ошибка при добавлении продукта в корзину"));
         }
-        //username достал из req.user, можно реализовать из req.body
-        
     }
     
     async getProducts(req, res, next){
         try{
-            const user = req.user;
-            const basket = await Basket.findOne({where: {userId: user.id}, include: Product})
-            return res.status(200).json(basket);
+            const products = await getProducts(req.user)
+            return res.status(200).json(products);
         }
         catch(err){
             next(ApiError.badRequest("Упс! Возникла ошибка при получении продуктов"));

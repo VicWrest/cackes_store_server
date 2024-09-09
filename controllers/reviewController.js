@@ -1,6 +1,6 @@
 const ApiError = require("../error/ApiError");
 const { Review } = require("../models/models");
-const { downloadImg } = require("../service/ReviewService");
+const { downloadImg } = require("../service/productService");
 
 class Controller {
     async createNewReview(req, res, next){
@@ -9,12 +9,12 @@ class Controller {
             const {authorName, rating, description} = req.body;
             const img = req.files?.img;
             const review = await Review.create({authorName, rating, description, userId: user.id});
-            console.log(img)
             if(img){
-                const newReview = await downloadImg(review.dataValues.id, img);
+                const newReview = await downloadImg(review, img, 'reviewsPhoto')
                 return res.json(newReview);
             }
-            return res.json(review); 
+            const reviews = await Review.findAll({order: [['updatedAt', 'DESC']]});
+            return res.json(reviews); 
         }
         catch(err){
             console.log(err);
@@ -24,7 +24,7 @@ class Controller {
     }
     
     async getAllReviews(req, res, next){
-        const reviews = await Review.findAll();
+        const reviews = await Review.findAll({order: [['updatedAt', 'DESC']]});
         res.status(200).json(reviews);
     }
 };

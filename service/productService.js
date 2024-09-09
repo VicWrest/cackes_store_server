@@ -1,9 +1,41 @@
 const uuid = require("uuid");
 const path = require("path");
+const { Product, Weight, ProductInfo } = require("../models/models");
 
-//крайнее: сделал универсальную функцию для загрузки фоток
-//попробовал только на типах фотку сохраняет, но на сайте не воспроизводит
 class Service {
+    async createProduct(body) {
+        try{
+            let {name, typeId, description, shortdescription, info, weight} = body;
+            const product = await Product.create({name, typeId, description, shortdescription});
+            if (info) {
+                info = JSON.parse(info)
+                info.forEach(i =>
+                    ProductInfo.create({
+                        title: i.title,
+                        description: i.description,
+                        productId: product.id
+                    })
+                )
+            }
+            if (weight) {
+                weight = JSON.parse(weight)
+                weight.forEach(i =>
+                    Weight.create({
+                        value: i.title,
+                        price: i.description,
+                        productId: product.id
+                    })
+                )
+            }
+            return product   
+        }
+        catch(err){
+            console.log(err)
+            return err;
+        }
+
+    }
+
     async downloadImg(model, img, folderName) {
         try{
             let fileName = folderName + '/' + uuid.v4() + ".jpg"

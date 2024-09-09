@@ -29,7 +29,7 @@ const Basket = sequelize.define('basket', {
 })
 const BasketProduct = sequelize.define('basket_product', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    quantity: {type: DataTypes.INTEGER, allowNull: false}
+    quantity: {type: DataTypes.INTEGER, allowNull: false, defaultValue: 1}
 })
 const Product = sequelize.define('product', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
@@ -102,6 +102,11 @@ Product.hasMany(Weight, {
     onDelete: "CASCADE"
 })
 Weight.belongsTo(Product)
+
+Weight.hasMany(BasketProduct, {
+    onDelete: "CASCADE"
+})
+BasketProduct.belongsTo(Weight)
 
 Korzh.hasMany(BasketProduct, {
     onDelete: "CASCADE"

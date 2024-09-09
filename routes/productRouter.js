@@ -7,7 +7,7 @@ const router = new Router();
 router.post("/", checkRole, productController.createNewProduct);
 router.post("/image", productController.uploadImg); //на клиенте не реализовано
 router.get("/", productController.getAllProducts); 
-router.get("/:id", productController.getProductById);
-router.delete("/:id", productController.deleteProduct); // не реализовано
+router.get("/:id([0-9]+)", productController.getProductById);
+router.delete("/", checkRole, productController.deleteProductById);
 
 module.exports = router;

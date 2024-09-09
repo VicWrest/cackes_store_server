@@ -6,7 +6,7 @@ const router = new Router();
 
 router.post("/", authMiddleware, addProductInBasket);
 router.get("/", authMiddleware, getProducts);
-router.delete("/:id", authMiddleware, deleteProductById)
+router.delete("/:id([0-9]+)", authMiddleware, deleteProductById)
 router.delete("/", authMiddleware, deleteAllProducts);
 
 module.exports = router;
