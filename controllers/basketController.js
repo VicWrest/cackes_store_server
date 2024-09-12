@@ -2,6 +2,7 @@ const { compareSync } = require("bcryptjs");
 const ApiError = require("../error/ApiError");
 const { Product, Basket, BasketProduct } = require("../models/models");
 const { addProductInBasket, getProducts } = require("../service/basketService");
+const basketService = require("../service/basketService");
 
 
 class Controller {
@@ -24,6 +25,7 @@ class Controller {
             return res.status(200).json(products);
         }
         catch(err){
+            console.log(err)
             next(ApiError.badRequest("Упс! Возникла ошибка при получении продуктов"));
         }
     }
@@ -46,7 +48,34 @@ class Controller {
             next(ApiError.badRequest("Серверная ошибка"));
         }
     }
-    
+
+    async increment(req, res, next){
+        try{ 
+            const user = req.user;
+            const {quantity} = req.body;
+            const products = await basketService.increment()
+            await basket.destroy()
+            return res.status(200).json(null);
+        }
+        catch(err){
+            next(ApiError.badRequest("Серверная ошибка при удалении продукта"));
+        }
+    }
+
+    async decrement(req, res, next){
+        try{ 
+            const user = req.user;
+            const {quantity, productId} = req.body;
+            const basket = await Basket.findOne({where: {userId: user.id}});
+            await basket.destroy()
+            return res.status(200).json(null);
+        }
+        catch(err){
+            next(ApiError.badRequest("Серверная ошибка при удалении продукта"));
+        }
+    }
+
+
     async deleteAllProducts(req, res, next){
         try{ 
             const user = req.user;

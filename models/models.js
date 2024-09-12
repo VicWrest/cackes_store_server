@@ -87,12 +87,29 @@ Order.hasMany(OrderItem, {
     onDelete: "CASCADE"
 });
 OrderItem.belongsTo(Order);
-
+//super many-to-many
 Basket.belongsToMany(Product, {
     onDelete: "CASCADE",
-    through: BasketProduct});
-Product.belongsToMany(Basket, {through: BasketProduct});
+    through: 
+        {
+            model: BasketProduct,
+            unique: false,
+    }
+});
+Product.belongsToMany(Basket, {through: 
+    {
+        model: BasketProduct,
+        unique: false,
+}});
 
+Basket.hasMany(BasketProduct, {
+    onDelete: "CASCADE"});
+BasketProduct.belongsTo(Basket);
+
+Product.hasMany(BasketProduct, {
+    onDelete: "CASCADE"});
+BasketProduct.belongsTo(Product);
+//super many-to-many
 Type.hasMany(Product, {
     onDelete: "CASCADE"
 })

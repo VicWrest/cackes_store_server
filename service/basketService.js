@@ -1,25 +1,21 @@
 const uuid = require("uuid");
 const path = require("path");
-const { Product, Weight, ProductInfo, Basket, BasketProduct } = require("../models/models");
+const { Product, Weight, ProductInfo, Basket, BasketProduct, Korzh } = require("../models/models");
+const { beforeFindAfterExpandIncludeAll } = require("../db/db");
 
 class Service {
-    constructor(){
-
-    } 
     static async getResponse(basketModel) {
+
         try{
-            const basketProducts = await basketModel.getProducts({
-                joinTableAttributes: ['id', 'quantity', 'productId', 'korzhId', 'weightId']
-            })
-            console.log(basketProducts)
-            //добавляю массив с объектами вес-цена к каждому товару 
-            //в корзине вручную
-            const products = basketProducts.map(async product => {
-                const weights = await Weight.findAll({where:{productId: product.basket_product.productId}, raw: true})
-                return {...product.dataValues, weights}
-            })
-            const response = Promise.all(products)
-            return response;
+            const basketProducts = await BasketProduct.findAll({where: {
+                basketId: basketModel.id},
+                include: [
+                    {model: Weight, as: 'weight'}, 
+                    {model: Korzh, as: 'korzh'}, 
+                    {model: Product, as: 'product', include: Weight}
+                ] 
+            });
+            return basketProducts;
         }
         catch(err){
             console.log(err)
@@ -27,7 +23,7 @@ class Service {
         }
     }
 
-    static async getProducts(user) {
+    async getProducts(user) {
         try{
             const basket = await Basket.findOne({where: {userId: user.id}});
             return Service.getResponse(basket);
@@ -83,10 +79,7 @@ class Service {
                 return Service.increment(data)
             }
             const prodById = await Product.findOne({where: {id: productId}});
-            const [products] = await basket.addProducts(prodById);
-            products.korzhId = korzhId;
-            products.weightId = weightId;
-            await products.save();
+            const products = await BasketProduct.create({basketId: basket.id, productId: prodById.id, weightId, korzhId});
             const response = await Service.getResponse(basket);
             return response;
         }
