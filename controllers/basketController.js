@@ -2,15 +2,14 @@ const { compareSync } = require("bcryptjs");
 const ApiError = require("../error/ApiError");
 const { Product, Basket, BasketProduct } = require("../models/models");
 const { addProductInBasket, getProducts } = require("../service/basketService");
-const basketService = require("../service/basketService");
-
+const Service = require('../service/basketService')
 
 class Controller {
     async addProductInBasket(req, res, next){
         try{
             const user = req.user;
             const {productId, korzhId, weightId} = req.body;
-            const addedProducts = await addProductInBasket({user, productId, korzhId, weightId});
+            const addedProducts = await Service.addProductInBasket({user, productId, korzhId, weightId});
             return res.json(addedProducts);
         }
         catch(err){
@@ -21,7 +20,7 @@ class Controller {
     
     async getProducts(req, res, next){
         try{
-            const products = await getProducts(req.user)
+            const products = await Service.getProducts(req.user);
             return res.status(200).json(products);
         }
         catch(err){
@@ -32,46 +31,54 @@ class Controller {
     
     async deleteProductById(req, res, next){
         try{
-            const productId = req.params.id;
+            const productId = req.params.productId;
             const user = req.user;
-            const basket = await Basket.findOne({where: {userId: user.id}});
-            const product = await Product.findOne({where: {id: productId}});
-            if(!product){
-                next(ApiError.badRequest("Серверная ошибка при удалении продукта"));
-            }
-            await basket.removeProduct(product);
-            const updatedBasket = await Basket.findOne({where: {userId: user.id}, include: Product})
-            return res.status(200).json(updatedBasket);
+            const products = await Service.deleteProductById({user, productId})
+            return res.status(200).json(products);
         }
         catch(err){
             console.log(err);
             next(ApiError.badRequest("Серверная ошибка"));
         }
     }
+    async updateProduct(req, res, next){
+        try{
+            const user = req.user;
+            const basketProductId = req.params.productId;
+            const {korzhId, weightId} = req.body;
+            const products = await Service.updateProduct({user, basketProductId, korzhId, weightId});
+            return res.status(200).json(products);
+        }
+        catch(err){
+            next(ApiError.badRequest("Упс! Возникла ошибка при обновлении продуктов в корзине"));
+        }
+    }
 
     async increment(req, res, next){
         try{ 
             const user = req.user;
-            const {quantity} = req.body;
-            const products = await basketService.increment()
-            await basket.destroy()
-            return res.status(200).json(null);
+            const {productId} = req.params;
+            const {weightId, korzhId} = req.body;
+            const products = await Service.increment({user, productId, weightId, korzhId});
+            return res.status(200).json(products);
         }
         catch(err){
-            next(ApiError.badRequest("Серверная ошибка при удалении продукта"));
+            console.log(err);
+            next(ApiError.badRequest("Серверная ошибка при увеличении количества товара"));
         }
     }
 
     async decrement(req, res, next){
         try{ 
             const user = req.user;
-            const {quantity, productId} = req.body;
-            const basket = await Basket.findOne({where: {userId: user.id}});
-            await basket.destroy()
-            return res.status(200).json(null);
+            const {productId} = req.params;
+            const {weightId, korzhId} = req.body;
+            const products = await Service.decrement({user, productId, weightId, korzhId});
+            return res.status(200).json(products);
         }
         catch(err){
-            next(ApiError.badRequest("Серверная ошибка при удалении продукта"));
+            console.log(err);
+            next(ApiError.badRequest("Серверная ошибка при увеличении количества товара"));
         }
     }
 
@@ -79,9 +86,8 @@ class Controller {
     async deleteAllProducts(req, res, next){
         try{ 
             const user = req.user;
-            const basket = await Basket.findOne({where: {userId: user.id}});
-            await basket.destroy()
-            return res.status(200).json(null);
+            const products = await Service.deleteAllProducts(user)
+            return res.status(200).json(products);
         }
         catch(err){
             next(ApiError.badRequest("Серверная ошибка при удалении продукта"));
