@@ -17,7 +17,7 @@ const app = new express();
 
 app.use(fileUpload({}));
 app.use(cors({
-    origin:'http://localhost:3000', 
+    origin:'https://homestorecackes.netlify.app/', 
     credentials:true,     
     optionSuccessStatus:200
 }));
