@@ -33,7 +33,7 @@ const start = async () =>{
     try{
         await sequelize.authenticate() //подключение к бд
         await sequelize.sync(); //синхронизация
-        app.listen(PORT, HOST, () => {
+        app.listen(PORT, () => {
             console.log(`The Server was started in PORT=${PORT}`)
         })
     }
