@@ -11,7 +11,6 @@ class Controller {
             const review = await Review.create({authorName, rating, description, userId: user.id});
             if(img){
                 const newReview = await downloadImg(review, img, 'reviewsPhoto')
-                return res.json(newReview);
             }
             const reviews = await Review.findAll({order: [['updatedAt', 'DESC']]});
             return res.json(reviews); 

@@ -64,8 +64,8 @@ class Service {
         try{
             const {user, productId, korzhId, weightId} = data;
             let basket = await Basket.findOne({where: {userId: user.id}});
-            if(!basket) return this.addProductInBasket(data);  
-            const checkProduct = await BasketProduct.findOne({where: {basketId: basket.id, id: productId, korzhId, weightId}});
+            if(!basket) return this.addProductInBasket(data); 
+            const checkProduct = await BasketProduct.findOne({where: {basketId: basket.id, productId, korzhId, weightId}});
             if(!checkProduct) return await this.addProductInBasket(data); 
             await checkProduct.increment('quantity', {by: 1})
             const response = await this.getResponse(basket);
@@ -82,9 +82,9 @@ class Service {
             const {user, productId, korzhId, weightId} = data;
             let basket = await Basket.findOne({where: {userId: user.id}});
             if(!basket) return this.addProductInBasket(data)
-            const checkProduct = await BasketProduct.findOne({where: {basketId: basket.id, id: productId, korzhId, weightId}});
+            const checkProduct = await BasketProduct.findOne({where: {basketId: basket.id, productId, korzhId, weightId}});
             if(!checkProduct) await this.addProductInBasket(data); 
-            await checkProduct.decrement('quantity', {by: 1});
+            const updatedProduct = await checkProduct.decrement('quantity', {by: 1});
             const response = await this.getResponse(basket);
             return response;
         }
@@ -102,7 +102,8 @@ class Service {
             }
             const checkProduct = await BasketProduct.findOne({where: {basketId: basket.id, productId, korzhId, weightId}});
             if(checkProduct) {
-                return Service.increment(data)
+                console.log(`check product by addproduct `, checkProduct)
+                return await this.increment(data);
             }
             const prodById = await Product.findOne({where: {id: productId}});
             const products = await BasketProduct.create({basketId: basket.id, productId: prodById.id, weightId, korzhId});
