@@ -26,6 +26,10 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.static('static'))
 
+app.get('/', (req, res) => {
+	res.send('<h1>Node application</h1>')
+});
+
 app.use('/api', router);
 
 app.use(errorHandler);
