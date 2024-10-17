@@ -7,6 +7,7 @@ class UserController {
     
     async login(req, res, next){
         try {
+            console.log(`START LOGIn`)
 			const addedUser = await userService.login(req.body);
 			res.status(200).json(addedUser);
 		}
