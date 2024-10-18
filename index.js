@@ -16,7 +16,7 @@ const TOKEN = process.env.TOKEN_BOT;
 const app = new express();
 
 app.use(fileUpload({}));
-// app.use(cors());
+app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));	
 app.use(express.json());
 app.use(bodyParser.json());
