@@ -9,20 +9,14 @@ const errorHandler = require("./middleware/errorHandlerMiddlewares");
 const bodyParser = require('body-parser');
 const TelegramBot = require('node-telegram-bot-api');
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8000;
 const HOST = process.env.HOST;
 const TOKEN = process.env.TOKEN_BOT;
 
 const app = new express();
 
 app.use(fileUpload({}));
-app.use(cors(
-    {
-        origin:'http://localhost', 
-        credentials:true,     
-        optionSuccessStatus:200
-    }
-));
+app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));	
 app.use(express.json());
 app.use(bodyParser.json());
@@ -32,6 +26,11 @@ app.get('/', (req, res) => {
 	res.send('<h1>Node application</h1>')
 });
 
+// {
+//     origin:'http://localhost', 
+//     credentials:true,     
+//     optionSuccessStatus:200
+// }
 
 app.use('/api', router);
 
