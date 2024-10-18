@@ -16,11 +16,7 @@ const TOKEN = process.env.TOKEN_BOT;
 const app = new express();
 
 app.use(fileUpload({}));
-app.use(cors({
-    origin:'http://homestorecackes.netlify.app', 
-    credentials:true,     
-    optionSuccessStatus:200
-}));
+// app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));	
 app.use(express.json());
 app.use(bodyParser.json());
@@ -30,6 +26,11 @@ app.get('/', (req, res) => {
 	res.send('<h1>Node application</h1>')
 });
 
+// {
+//     origin:'http://homestorecackes.netlify.app', 
+//     credentials:true,     
+//     optionSuccessStatus:200
+// }
 app.use('/api', router);
 
 app.use(errorHandler);
