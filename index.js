@@ -2,12 +2,12 @@ const express = require('express');
 require('dotenv').config();
 const sequelize = require('./db/db');
 const models = require('./models/models')
-const cors = require("cors");
 const fileUpload = require('express-fileupload');
 const router = require('./routes/index');
 const errorHandler = require("./middleware/errorHandlerMiddlewares");
 const bodyParser = require('body-parser');
 const TelegramBot = require('node-telegram-bot-api');
+const cors = require('./middleware/cors.middleware');
 
 const PORT = process.env.PORT || 8000;
 const HOST = process.env.HOST;
@@ -16,7 +16,7 @@ const TOKEN = process.env.TOKEN_BOT;
 const app = new express();
 
 app.use(fileUpload({}));
-app.use(cors());
+app.use(cors);
 app.use(bodyParser.urlencoded({extended: false}));	
 app.use(express.json());
 app.use(bodyParser.json());
