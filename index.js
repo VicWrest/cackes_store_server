@@ -26,12 +26,6 @@ app.get('/', (req, res) => {
 	res.send('<h1>Node application</h1>')
 });
 
-// {
-//     origin:'http://localhost', 
-//     credentials:true,     
-//     optionSuccessStatus:200
-// }
-
 app.use('/api', router);
 
 app.use(errorHandler);
