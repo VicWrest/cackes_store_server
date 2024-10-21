@@ -11,14 +11,13 @@ class UserService {
 		if(candidate) {
 			return;
 		}
-		const addedUser = await User.create({name: userName, role: "ADMIN"});
+		const addedUser = await User.create({name: userName});
         const token =  tokenService.generateToken(addedUser.id, addedUser.name, addedUser.role)
 		return token;
 	}
 	async login(data) {
 		try{
 		const {userName} = data;
-		console.log(userName)
         const user = await User.findOne({where: {name: userName}})
 		if(!user) {
             return await this.registration(data);
