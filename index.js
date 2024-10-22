@@ -16,6 +16,7 @@ const reactHost = process.env.FRONT_HOST
 
 const app = new express();
 
+
 app.use(fileUpload({}));
 app.use(cors({
     origin: reactHost, 
