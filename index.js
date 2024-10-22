@@ -7,24 +7,25 @@ const router = require('./routes/index');
 const errorHandler = require("./middleware/errorHandlerMiddlewares");
 const bodyParser = require('body-parser');
 const TelegramBot = require('node-telegram-bot-api');
-const cors = require('./middleware/cors.middleware');
+// const cors = require('./middleware/cors.middleware');
+const cors = require('cors');
 
 const PORT = process.env.PORT || 8000;
-const HOST = process.env.HOST;
 const TOKEN = process.env.TOKEN_BOT;
+const reactHost = process.env.FRONT_HOST
 
 const app = new express();
 
 app.use(fileUpload({}));
-app.use(cors);
+app.use(cors({
+    origin: reactHost, 
+    credentials:true,
+    optionSuccessStatus:200
+}));
 app.use(bodyParser.urlencoded({extended: false}));	
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.static('static'))
-
-app.get('/', (req, res) => {
-	res.send('<h1>Node application</h1>')
-});
 
 app.use('/api', router);
 
