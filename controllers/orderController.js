@@ -1,13 +1,23 @@
 const ApiError = require("../error/ApiError");
 const orderService = require("../service/orderService");
+const { orderButtons } = require("../tg-options/options");
 
 class Controller {
     async createNewOrder(req, res, next){
         try{
             const user = req.user;
-            const {products, date, summa, phone} = req.body;
-            const order = await orderService.createNewOrder({user, products, date, summa, phone});
-            return res.json(order);
+            const {queryId, products, date, summa, phone} = req.body;
+            const bot = req.bot;
+            await bot.answerWebAppQuery(queryId, {
+                type: 'article',
+                id: queryId,
+                title: 'Подтверждение заказа',
+                input_message_content: {
+                    message_text: `Ваш заказ на сумму ${summa}, ${products.map(item => item.title).join(', ')}`
+                }
+            });
+            await bot.sendMessage(chatId, `Все верно?`, orderButtons)
+            return res.status(200).json({});
         }
         catch(err){
             console.log(err)
@@ -15,15 +25,38 @@ class Controller {
         }
     }
 
-    async getAllOrders(req, res, next){
+    async creatingNewOrder(chatId, data, userName){
+        try{
+            //need: 
+            //user
+            //data
+            const {queryId, products, date, summa, phone} = req.body;
+            await bot.answerWebAppQuery(queryId, {
+                type: 'article',
+                id: queryId,
+                title: 'Подтверждение заказа',
+                input_message_content: {
+                    message_text: `Ваш заказ на сумму ${summa}, ${products.map(item => item.title).join(', ')}`
+                }
+            })
+            const order = await orderService.createNewOrder({userName, products, date, summa, phone});
+
+            return res.status(200).json({});
+        }
+        catch(err){
+            return new Error()
+        }
+    }
+
+    async getAllOrders(userName){
         try{
             const user = req.user;
-            const orders = await orderService.getAllOrders({user})
+            const orders = await orderService.getAllOrders(userName)
             res.status(200).json(orders);
         }
         catch(err){
             console.log(err)
-            next(ApiError.badRequest("Серверная ошибка при получении заказов"));
+            return new Error();
         }
 
        

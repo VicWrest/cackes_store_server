@@ -7,9 +7,11 @@ const { Review, Order, OrderItem, User } = require("../models/models");
 class Service {
     async createNewOrder(body){
         try{
-            const {date, summa, phone, user} = body;
+            const {date, summa, phone, userName} = body;
             let {products} = body;
             if(!products) return new Error('Ваша корзина пуста');
+            const user = await User.findOne({where: {name: userName}})
+            if(!user) throw new Error();
             const order = await Order.create({date, summa, phone, userId: user.id});
             for(const i of products){
                await OrderItem.create({
@@ -32,10 +34,9 @@ class Service {
         
     }
 
-    async getAllOrders(body){
+    async getAllOrders(userName){
         try{
-            const {user} = body
-            const userInDB = await User.findOne({where: {id: user.id}});
+            const userInDB = await User.findOne({where: {name: userName}});
             //возможно нужго будет изменить include
             const orders = await userInDB.getOrders({include: OrderItem});
             return orders;
@@ -43,8 +44,6 @@ class Service {
         catch(err){
             return new Error();
         }
-
-       
     }
 }
 

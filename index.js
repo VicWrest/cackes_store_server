@@ -7,14 +7,17 @@ const router = require('./routes/index');
 const errorHandler = require("./middleware/errorHandlerMiddlewares");
 const bodyParser = require('body-parser');
 const TelegramBot = require('node-telegram-bot-api');
-// const cors = require('./middleware/cors.middleware');
 const cors = require('cors');
+const { creatingNewOrder } = require('./controllers/orderController');
+const commands = require('./tg-commands/commands');
+const { getErrorAndInstruction } = require('./controllers/botController');
 
 const PORT = process.env.PORT || 8000;
 const TOKEN = process.env.TOKEN_BOT;
 const reactHost = process.env.FRONT_HOST
 
 const app = new express();
+const bot = new TelegramBot(TOKEN, {polling: true});
 
 
 app.use(fileUpload({}));
@@ -28,7 +31,10 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.static('static'))
 
-app.use('/api', router);
+app.use('/api', function(req, res, next){
+    req.bot = bot;
+    next();
+}, router);
 
 app.use(errorHandler);
 const start = async () =>{
@@ -46,27 +52,34 @@ const start = async () =>{
 
 start();
 
-const bot = new TelegramBot(TOKEN, {polling: true});
+bot.setMyCommands(commands)
 
 bot.on('message', async msg => {
     const text = msg.text;
     const chatId = msg.chat.id;
-
+    
     if(text === '/start'){
-        await bot.sendPhoto(chatId, `./static/mainPhoto/startPhoto.jpeg`)            
-        await bot.sendMessage(chatId, `Добро пожаловать в Мастерскую домашних десертов Tsyganova's cakes🎂🧁`, {
-            reply_markup: {
-                inline_keyboard: [
-                    [
-                        {text: 'Выбрать дессерт', web_app: {url: `https://homestorecackes.netlify.app/`}},
-                        {text: 'Корзина', web_app: {url: `https://homestorecackes.netlify.app/basket`}},
-                        {text: 'Отзывы', web_app: {url: `https://homestorecackes.netlify.app/review`}},
-                    ]
-                ]
-            }
-        })
+        await controller.start(bot, msg);
+        return;
     }
-    if(msg?.web_app_data?.data){
-            await controller.sendFormData(bot, msg);
+    if(text === '/myOrders'){
+        await controller.getUserOrders(bot, msg);   
+        return; 
+    }
+    else {
+        await getErrorAndInstruction(bot, msg)
+        return;
     }
 })
+
+bot.on('callback_query', async msg => {
+    const chatId = msg.message.chat.id;
+        try{
+            creatingNewOrder(bot, msg);
+        }
+        catch(err){
+            bot.sendMessage(chatId, 'Упс! Произошла серверная ошибка🙊');
+            bot.sendMessage(chatId, 'Попробуйте запустить бот заново командой /start 🙃');
+        }
+    });
+
