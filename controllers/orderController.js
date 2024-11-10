@@ -16,7 +16,16 @@ class Controller {
                     message_text: `Ваш заказ на сумму ${summa}, ${products.map(item => item.title).join(', ')}`
                 }
             });
-            await bot.sendMessage(chatId, `Все верно?`, orderButtons)
+            await bot.sendMessage(chatId, `Все верно?`, {
+                reply_markup: JSON.stringify({
+                    inline_keyboard: [
+                        [
+                            {text: 'Да, оформить заказ', callback_data: {answer: true, body: JSON.stringify(req.body)}},
+                            {text: 'Редактировать заказ', web_app: {url: process.env.FRONT_HOST + `/basket`}}
+                        ]
+                    ]
+                })
+            })
             return res.status(200).json({});
         }
         catch(err){
