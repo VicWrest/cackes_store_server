@@ -60,15 +60,15 @@ bot.on('message', async msg => {
     const chatId = msg.chat.id;
     
     if(text === '/start'){
-        await botController.start(bot, msg);
+        botController.start(bot, msg);
         return;
     }
     if(text === '/myOrders'){
-        await botController.getOrders(bot, msg);   
+        botController.getOrders(bot, msg);   
         return; 
     }
     else {
-        await getErrorAndInstruction(bot, msg)
+        getErrorAndInstruction(bot, msg)
         return;
     }
 })
