@@ -1,4 +1,3 @@
-const service = require("./service");
 const { startOptions } = require("../tg-options/options");
 const { getAllOrders } = require("./orderController");
 require('dotenv').config();
