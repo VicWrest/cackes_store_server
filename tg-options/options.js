@@ -12,17 +12,17 @@ module.exports = {
                 ]
             ]
         })
-    },
-
-    orderButtons: {
-        reply_markup: JSON.stringify({
-            inline_keyboard: [
-                [
-                    {text: 'Да, оформить заказ', callback_data: {answer: true, body: JSON.stringify(req.body)}},
-                    {text: 'Редактировать заказ', web_app: {url: process.env.FRONT_HOST + `/basket`}}
-                ]
-            ]
-        })
     }
+
+    // orderButtons: {
+    //     reply_markup: JSON.stringify({
+    //         inline_keyboard: [
+    //             [
+    //                 {text: 'Да, оформить заказ', callback_data: {answer: true, body: JSON.stringify(req.body)}},
+    //                 {text: 'Редактировать заказ', web_app: {url: process.env.FRONT_HOST + `/basket`}}
+    //             ]
+    //         ]
+    //     })
+    // }
 
 }

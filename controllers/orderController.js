@@ -1,6 +1,5 @@
 const ApiError = require("../error/ApiError");
 const orderService = require("../service/orderService");
-const { orderButtons } = require("../tg-options/options");
 
 class Controller {
     async createNewOrder(req, res, next){
