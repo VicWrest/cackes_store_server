@@ -11,6 +11,7 @@ const cors = require('cors');
 const { creatingNewOrder } = require('./controllers/orderController');
 const commands = require('./tg-commands/commands');
 const { getErrorAndInstruction } = require('./controllers/botController');
+const botController = require('./controllers/botController');
 
 const PORT = process.env.PORT || 8000;
 const TOKEN = process.env.TOKEN_BOT;
@@ -59,11 +60,11 @@ bot.on('message', async msg => {
     const chatId = msg.chat.id;
     
     if(text === '/start'){
-        await controller.start(bot, msg);
+        await botController.start(bot, msg);
         return;
     }
     if(text === '/myOrders'){
-        await controller.getUserOrders(bot, msg);   
+        await botController.getOrders(bot, msg);   
         return; 
     }
     else {
