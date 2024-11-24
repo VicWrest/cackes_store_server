@@ -12,6 +12,7 @@ const { creatingNewOrder } = require('./controllers/orderController');
 const commands = require('./tg-commands/commands');
 const { getErrorAndInstruction } = require('./controllers/botController');
 const botController = require('./controllers/botController');
+const { startOptions } = require('./tg-options/options');
 
 const PORT = process.env.PORT || 8000;
 const TOKEN = process.env.TOKEN_BOT;
@@ -60,9 +61,8 @@ bot.on('message', async msg => {
     const chatId = msg.chat.id;
     
     if(text === '/start'){
-        //bot.sendPhoto(chatId, './static/mainPhoto/startPhoto.jpeg');          
-        botController.start(bot, msg);
-        return;
+        await bot.sendPhoto(chatId, './static/mainPhoto/startPhoto.jpeg')            
+        return await bot.sendMessage(chatId, `Добро пожаловать в домашнюю Мастерскую вкусных десертов Tsyganova's cakes🎂🧁`, startOptions)
     }
     if(text === '/myOrders'){
         botController.getOrders(bot, msg);   
