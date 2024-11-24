@@ -56,7 +56,8 @@ start();
 
 bot.setMyCommands([
     {command: '/start', description: 'Перейти в домашнюю мастерскую'},
-    {command: '/myOrders', description: 'Мои заказы'}
+    {command: '/myorders', description: 'Мои заказы'}
+    
 ])
 
 bot.on('message', async msg => {
