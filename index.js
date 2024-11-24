@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 8000;
 const TOKEN = process.env.TOKEN_BOT;
 const reactHost = process.env.FRONT_HOST
 
-// const app = new express();
+const app = new express();
 // const bot = new TelegramBot(TOKEN, {polling: true});
 
 
