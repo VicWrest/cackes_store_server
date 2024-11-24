@@ -54,11 +54,7 @@ const start = async () =>{
 
 start();
 
-bot.setMyCommands([
-    {command: '/start', description: 'Перейти в домашнюю мастерскую'},
-    {command: '/myorders', description: 'Мои заказы'}
-    
-])
+bot.setMyCommands(commands)
 
 bot.on('message', async msg => {
     const text = msg.text;
