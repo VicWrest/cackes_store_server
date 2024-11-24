@@ -54,7 +54,7 @@ const start = async () =>{
 
 start();
 
-// bot.setMyCommands(commands)
+bot.setMyCommands(commands)
 
 bot.on('message', async msg => {
     const text = msg.text;
