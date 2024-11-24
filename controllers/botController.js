@@ -6,7 +6,7 @@ class Controller {
     async start(bot, msg){
         const chatId = msg.chat.id;
         try{
-            bot.sendPhoto(chatId, '../static/mainPhoto/startPhoto.jpeg')            
+            bot.sendPhoto(chatId, '/../static/mainPhoto/startPhoto.jpeg')            
             bot.sendMessage(chatId, `Добро пожаловать в домашнюю Мастерскую вкусных десертов Tsyganova's cakes🎂🧁`, startOptions)
         }
         catch(err){
