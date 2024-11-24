@@ -37,8 +37,8 @@ app.use(express.static('static'))
 //     next();
 // }, router);
 
-app.use('/', function(req, res, next){
-    res.send('<h1> SERVER <h1>')
+app.get('/', function(req, res, next){
+    res.send('<h1> SERVER </h1>')
 });
 
 app.use(errorHandler);
