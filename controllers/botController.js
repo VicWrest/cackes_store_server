@@ -7,7 +7,7 @@ class Controller {
     async start(bot, msg){
         const chatId = msg.chat.id;
         try{
-            const imageStream = fs.createReadStream('../static/mainPhoto/startPhoto.jpeg');
+            const imageStream = fs.createReadStream('startPhoto.jpeg');
             await bot.sendPhoto(chatId, imageStream)            
             await bot.sendMessage(chatId, `Добро пожаловать в домашнюю Мастерскую вкусных десертов Tsyganova's cakes🎂🧁`, startOptions)
         }
