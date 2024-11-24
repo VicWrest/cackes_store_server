@@ -7,7 +7,7 @@ class Controller {
         const chatId = msg.chat.id;
         try{
             await bot.sendMessage(chatId, `Добро пожаловать в домашнюю Мастерскую вкусных десертов Tsyganova's cakes🎂🧁`, startOptions)
-            await bot.sendPhoto(chatId, 'https://spb-cake.ru/cake/13637/#prod');            
+            await bot.sendPhoto(chatId, './pic.jpeg');            
         }
         catch(err){
             console.log(err);
