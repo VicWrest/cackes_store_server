@@ -60,7 +60,7 @@ bot.on('message', async msg => {
     const chatId = msg.chat.id;
     
     if(text === '/start'){
-        bot.sendPhoto(chatId, './static/mainPhoto/startPhoto.jpeg');          
+        //bot.sendPhoto(chatId, './static/mainPhoto/startPhoto.jpeg');          
         botController.start(bot, msg);
         return;
     }
