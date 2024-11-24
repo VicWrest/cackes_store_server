@@ -18,7 +18,7 @@ const TOKEN = process.env.TOKEN_BOT;
 const reactHost = process.env.FRONT_HOST
 
 const app = new express();
-// const bot = new TelegramBot(TOKEN, {polling: true});
+const bot = new TelegramBot(TOKEN, {polling: true});
 
 
 app.use(fileUpload({}));
@@ -32,20 +32,16 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.static('static'))
 
-// app.use('/api', function(req, res, next){
-//     req.bot = bot;
-//     next();
-// }, router);
-
-app.get('/', function(req, res, next){
-    res.send('<h1> SERVER </h1>')
-});
+app.use('/api', function(req, res, next){
+    req.bot = bot;
+    next();
+}, router);
 
 app.use(errorHandler);
 const start = async () =>{
     try{
-        // await sequelize.authenticate() //подключение к бд
-        // await sequelize.sync(); //синхронизация
+        await sequelize.authenticate() //подключение к бд
+        await sequelize.sync(); //синхронизация
         app.listen(PORT, () => {
             console.log(`The Server was started in PORT=${PORT}`)
         })
@@ -57,34 +53,34 @@ const start = async () =>{
 
 start();
 
-// bot.setMyCommands(commands)
+bot.setMyCommands(commands)
 
-// bot.on('message', async msg => {
-//     const text = msg.text;
-//     const chatId = msg.chat.id;
+bot.on('message', async msg => {
+    const text = msg.text;
+    const chatId = msg.chat.id;
     
-//     if(text === '/start'){
-//         botController.start(bot, msg);
-//         return;
-//     }
-//     if(text === '/myOrders'){
-//         botController.getOrders(bot, msg);   
-//         return; 
-//     }
-//     else {
-//         getErrorAndInstruction(bot, msg)
-//         return;
-//     }
-// })
+    if(text === '/start'){
+        botController.start(bot, msg);
+        return;
+    }
+    if(text === '/myOrders'){
+        botController.getOrders(bot, msg);   
+        return; 
+    }
+    else {
+        getErrorAndInstruction(bot, msg)
+        return;
+    }
+})
 
-// bot.on('callback_query', async msg => {
-//     const chatId = msg.message.chat.id;
-//         try{
-//             creatingNewOrder(bot, msg);
-//         }
-//         catch(err){
-//             bot.sendMessage(chatId, 'Упс! Произошла серверная ошибка🙊');
-//             bot.sendMessage(chatId, 'Попробуйте запустить бот заново командой /start 🙃');
-//         }
-//     });
+bot.on('callback_query', async msg => {
+    const chatId = msg.message.chat.id;
+        try{
+            creatingNewOrder(bot, msg);
+        }
+        catch(err){
+            bot.sendMessage(chatId, 'Упс! Произошла серверная ошибка🙊');
+            bot.sendMessage(chatId, 'Попробуйте запустить бот заново командой /start 🙃');
+        }
+    });
 
