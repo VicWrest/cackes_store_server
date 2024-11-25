@@ -13,13 +13,12 @@ class UserService {
 			return;
 		}
 		const addedUser = await User.create({name: userName, role: 'ADMIN'});
-		const users = await User.findAll();
-		console.log(users);
         const token =  tokenService.generateToken(addedUser.id, addedUser.name, addedUser.role)
 		return token;
 	}
 	async login(data) {
 		try{
+			console.log(`START LOGIN`)
 		const {userName} = data;
         const user = await User.findOne({where: {name: userName}})
 		if(!user) {
@@ -27,6 +26,8 @@ class UserService {
 		};
 		
 		const token = await tokenService.generateToken(user.id, user.name, user.role);
+		const users = await User.findAll();
+		console.log(users);
 		return {token};
 		}
 		catch(e) {
