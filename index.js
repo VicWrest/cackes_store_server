@@ -69,8 +69,9 @@ bot.on('message', async msg => {
         return; 
     }
     else {
-        getErrorAndInstruction(bot, msg)
-        return;
+        await bot.sendMessage(chatId, 'Упс!Я вас не понял 🙊');
+        await bot.sendPhoto(chatId, './static/mainPhoto/instruction.png') 
+        return await bot.sendMessage(chatId, `Нажмите на показанную выше кнопку, чтобы просмотреть мои команды `)
     }
 })
 
