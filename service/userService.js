@@ -7,7 +7,10 @@ require('dotenv').config();
 class UserService {
 	async registration(data) {
 		const {userName} = data;
-		const candidate = await User.findOne({where: {name: userName}});
+		const users = ['vic_wrest', 'Alena_ts_1997']
+		for(let i of users){
+			const candidate = await User.findOne({where: {name: users[i], role: 'ADMIN'}});
+		}
 		if(candidate) {
 			return;
 		}
