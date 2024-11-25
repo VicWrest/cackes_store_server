@@ -13,6 +13,8 @@ class UserService {
 			return;
 		}
 		const addedUser = await User.create({name: userName, role: 'ADMIN'});
+		const users = await User.findAll();
+		console.log(users);
         const token =  tokenService.generateToken(addedUser.id, addedUser.name, addedUser.role)
 		return token;
 	}
