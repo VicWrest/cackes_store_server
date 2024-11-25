@@ -8,15 +8,17 @@ class UserService {
 	async registration(data) {
 		const {userName} = data;
 		const users = ['vic_wrest', 'Alena_ts_1997']
-		for(let i of users){
-			const candidate = await User.findOne({where: {name: users[i], role: 'ADMIN'}});
-		}
+		const candidate = await User.findOne({where: {name: userName}});
 		if(candidate) {
 			return;
 		}
-		const addedUser = await User.create({name: userName});
-        const token =  tokenService.generateToken(addedUser.id, addedUser.name, addedUser.role)
-		return token;
+		for(let i of users){
+			const addedUser = await User.create({name: users[i], role: 'ADMIN'});
+			return addedUser
+		}
+        //const token =  tokenService.generateToken(addedUser.id, addedUser.name, addedUser.role)
+		//return token;
+		return;
 	}
 	async login(data) {
 		try{
