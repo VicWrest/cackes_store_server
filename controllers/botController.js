@@ -42,7 +42,7 @@ class Controller {
         const chatId = msg.chat.id;
         try{
             await bot.sendMessage(chatId, 'Упс!Я вас не понял 🙊');
-            await bot.sendPhoto(chatId, `СКРИН`) //TO DO
+            await bot.sendPhoto(chatId, '../static/mainPhoto/instruction.png') 
             await bot.sendMessage(chatId, `Нажмите на показанную выше кнопку, чтобы просмотреть мои команды `)
         }
         catch(err){
