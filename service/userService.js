@@ -7,18 +7,14 @@ require('dotenv').config();
 class UserService {
 	async registration(data) {
 		const {userName} = data;
-		const users = ['vic_wrest', 'Alena_ts_1997']
+		//const users = ['vic_wrest', 'Alena_ts_1997']
 		const candidate = await User.findOne({where: {name: userName}});
 		if(candidate) {
 			return;
 		}
-		for(let i of users){
-			const addedUser = await User.create({name: users[i], role: 'ADMIN'});
-			return addedUser
-		}
-        //const token =  tokenService.generateToken(addedUser.id, addedUser.name, addedUser.role)
-		//return token;
-		return;
+		const addedUser = await User.create({name: userName, role: 'ADMIN'});
+        const token =  tokenService.generateToken(addedUser.id, addedUser.name, addedUser.role)
+		return token;
 	}
 	async login(data) {
 		try{
