@@ -80,7 +80,9 @@ bot.on('message', async msg => {
 
 bot.on('callback_query', async msg => {
     const chatId = msg.message.chat.id;
-    console.log(msg)
+    const {data} = msg;
+    JSON.parse(data);
+    console.log(data)
         try{
             if(true){
                 //очистить корзину
