@@ -8,7 +8,7 @@ class Controller {
             const {queryId, chatId, products, date, summa, phone} = req.body;
             console.log(req.body)
             const bot = req.bot;
-            const data = JSON.stringify({answer: true, body: req.body})
+            const data = `${JSON.stringify({answer: true, body: req.body})}`
             console.log(data, typeof data);
             await bot.answerWebAppQuery(queryId, {
                 type: 'article',
