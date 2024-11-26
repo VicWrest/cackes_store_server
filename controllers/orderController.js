@@ -20,12 +20,13 @@ class Controller {
                 reply_markup: JSON.stringify({
                     inline_keyboard: [
                         [
-                            {text: 'Да, оформить заказ', callback_data: JSON.stringify({answer: true, body: req.body})},
+                            {text: 'Да, оформить заказ', callback_data: '123'},
                             {text: 'Редактировать заказ', web_app: {url: process.env.FRONT_HOST + `/basket`}}
                         ]
                     ]
                 })
             })
+            //JSON.stringify({answer: true, body: req.body})
             return res.status(200).json({});
         }
         catch(err){
