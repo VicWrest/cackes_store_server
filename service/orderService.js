@@ -7,10 +7,10 @@ const { Review, Order, OrderItem, User } = require("../models/models");
 class Service {
     async createNewOrder(body){
         try{
-            const {date, summa, phone, userName} = body;
+            const {date, summa, phone, userId} = body;
             let {products} = body;
             if(!products) return new Error('Ваша корзина пуста');
-            const user = await User.findOne({where: {name: userName}})
+            const user = await User.findOne({where: {id: userId}})
             if(!user) throw new Error();
             const order = await Order.create({date, summa, phone, userId: user.id});
             for(const i of products){

@@ -80,7 +80,16 @@ bot.on('message', async msg => {
 
 bot.on('callback_query', async msg => {
     const chatId = msg.message.chat.id;
+    console.log(msg)
         try{
+            if(true){
+                //очистить корзину
+                //Ваш заказ оформлен, спасибо за заказ
+            }
+            if(false){
+                //удалить заказ по id
+                //перенаправить в корзину
+            }
             console.log(msg)
             creatingNewOrder(bot, msg);
         }
