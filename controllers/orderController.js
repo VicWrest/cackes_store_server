@@ -6,6 +6,7 @@ class Controller {
         try{
             const user = req.user;
             const {queryId, chatId, products, date, summa, phone} = req.body;
+            console.log(req.body)
             const bot = req.bot;
             await bot.answerWebAppQuery(queryId, {
                 type: 'article',
@@ -19,7 +20,7 @@ class Controller {
                 reply_markup: JSON.stringify({
                     inline_keyboard: [
                         [
-                            {text: 'Да, оформить заказ', callback_data: {answer: true, body: JSON.stringify(req.body)}},
+                            {text: 'Да, оформить заказ', callback_data: JSON.stringify({answer: true, body: req.body})},
                             {text: 'Редактировать заказ', web_app: {url: process.env.FRONT_HOST + `/basket`}}
                         ]
                     ]
