@@ -6,6 +6,7 @@ class Controller {
         try{
             const user = req.user;
             const {queryId, products, date, summa, phone} = req.body;
+            console.log(queryId, products, date, summa)
             const bot = req.bot;
             await bot.answerWebAppQuery(queryId, {
                 type: 'article',
