@@ -5,7 +5,7 @@ class Controller {
     async createNewOrder(req, res, next){
         try{
             const user = req.user;
-            const {queryId, products, date, summa, phone} = req.body;
+            const {queryId, chatId, products, date, summa, phone} = req.body;
             const bot = req.bot;
             await bot.answerWebAppQuery(queryId, {
                 type: 'article',
