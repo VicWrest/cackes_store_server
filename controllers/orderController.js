@@ -22,7 +22,7 @@ class Controller {
                 reply_markup: JSON.stringify({
                     inline_keyboard: [
                         [
-                            {text: 'Да, оформить заказ', callback_data: '123'},
+                            {text: 'Да, оформить заказ', callback_data: data},
                             {text: 'Редактировать заказ', web_app: {url: process.env.FRONT_HOST + `/basket`}}
                         ]
                     ]
