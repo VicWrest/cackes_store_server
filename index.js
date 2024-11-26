@@ -60,6 +60,9 @@ bot.on('message', async msg => {
     const text = msg.text;
     const chatId = msg.chat.id;
     console.log(msg)
+    if(msg?.via_bot){ //если сообщение отправлено ботом от имени пользователя
+        return;
+    }
     if(text === '/start'){
         await bot.sendPhoto(chatId, './static/mainPhoto/startPhoto.jpeg')            
         return await bot.sendMessage(chatId, `Добро пожаловать в домашнюю Мастерскую вкусных десертов Tsyganova's cakes🎂🧁`, startOptions)
