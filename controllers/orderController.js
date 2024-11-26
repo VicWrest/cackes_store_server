@@ -6,15 +6,13 @@ class Controller {
         try{
             const user = req.user;
             const {queryId, products, date, summa, phone} = req.body;
-            console.log(req.body)
-            console.log(queryId, products, date, summa)
             const bot = req.bot;
             await bot.answerWebAppQuery(queryId, {
                 type: 'article',
                 id: queryId,
                 title: 'Подтверждение заказа',
                 input_message_content: {
-                    message_text: `Ваш заказ на сумму ${summa}, ${products.map(item => item.title).join(', ')}`
+                    message_text: `Ваш заказ на сумму ${summa}, ${products.map(item => item.product.name).join(', ')}`
                 }
             });
             await bot.sendMessage(chatId, `Все верно?`, {
