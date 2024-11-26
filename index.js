@@ -59,7 +59,7 @@ bot.setMyCommands(commands)
 bot.on('message', async msg => {
     const text = msg.text;
     const chatId = msg.chat.id;
-    
+    console.log(msg)
     if(text === '/start'){
         await bot.sendPhoto(chatId, './static/mainPhoto/startPhoto.jpeg')            
         return await bot.sendMessage(chatId, `Добро пожаловать в домашнюю Мастерскую вкусных десертов Tsyganova's cakes🎂🧁`, startOptions)
@@ -78,6 +78,7 @@ bot.on('message', async msg => {
 bot.on('callback_query', async msg => {
     const chatId = msg.message.chat.id;
         try{
+            console.log(msg)
             creatingNewOrder(bot, msg);
         }
         catch(err){

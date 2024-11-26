@@ -8,18 +8,7 @@ class Controller {
             const {queryId, chatId, products, date, summa, phone} = req.body;
             console.log(req.body)
             const bot = req.bot;
-            const newProducts = [];
-            for(const i of products){
-                newProducts.push({
-                    productName: i.product.name,
-                    quantity: i.quantity,
-                    weight: i.weight.value,
-
-                })
-            } 
-            // const data = `${JSON.stringify({answer: true, body: req.body})}`
-            const data = JSON.stringify({type: 'order', body: {date, summa, phone}})
-            console.log(data, typeof data);
+            const newOrder = await orderService.createNewOrder({date, summa, phone, userId: user.id, products});
             await bot.answerWebAppQuery(queryId, {
                 type: 'article',
                 id: queryId,
@@ -32,8 +21,8 @@ class Controller {
                 reply_markup: JSON.stringify({
                     inline_keyboard: [
                         [
-                            {text: 'Да, оформить заказ', callback_data: 'yes'},
-                            {text: 'Редактировать заказ', web_app: {url: process.env.FRONT_HOST + `/basket`, callback_data: 'no'}}
+                            {text: 'Да, оформить заказ', callback_data: JSON.stringify({type: 'order', answer: 'yes', orderId: newOrder.id})},
+                            {text: 'Редактировать заказ', web_app: {url: process.env.FRONT_HOST + `/basket`, callback_data: JSON.stringify({type: 'order', answer: 'no', orderId: newOrder.id})}}
                         ]
                     ]
                 })
