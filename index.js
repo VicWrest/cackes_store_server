@@ -81,8 +81,8 @@ bot.on('message', async msg => {
 bot.on('callback_query', async msg => {
     const chatId = msg.message.chat.id;
     const {data} = msg;
-    JSON.parse(data);
-    console.log(data.answer, data.answer === 'yes')
+    const obj = JSON.parse(data);
+    console.log(obj.answer, obj.answer === 'yes')
         try{
             if(data.answer === 'yes'){
                 await orderConfirm(bot, msg);
