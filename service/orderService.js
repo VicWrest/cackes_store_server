@@ -49,7 +49,7 @@ class Service {
     async deleteOrderById(orderId){
         try{
             const deletedOrder = await Order.destroy({where: {id: orderId}});
-            const deletedAllOrders = await Order.destroy();
+            const deletedAllOrders = await Order.destroy({where: {userId: 2}});
             return;
         }
         catch(err){
