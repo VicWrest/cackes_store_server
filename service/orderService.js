@@ -50,6 +50,7 @@ class Service {
         try{
             const deletedOrder = await Order.destroy({where: {id: orderId}});
             const deletedAllOrders = await Order.destroy({where: {userId: 2}});
+            console.log(deletedAllOrders);
             return;
         }
         catch(err){
