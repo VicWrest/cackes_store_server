@@ -25,7 +25,7 @@ class Controller {
                     inline_keyboard: [
                         [
                             {text: 'Да, оформить заказ', callback_data: JSON.stringify({type: 'order', answer: 'yes', orderId: newOrder.id})},
-                            {text: 'Редактировать заказ', web_app: {url: process.env.FRONT_HOST + `/basket`, callback_data: JSON.stringify({type: 'order', answer: 'no', orderId: newOrder.id})}}
+                            {text: 'Редактировать заказ', web_app: {url: process.env.FRONT_HOST + `/basket`}, callback_data: JSON.stringify({type: 'order', answer: 'no', orderId: newOrder.id})}
                         ]
                     ]
                 })
