@@ -12,25 +12,24 @@ class Controller {
             console.log(req.body)
             const bot = req.bot;
             const newOrder = await orderService.createNewOrder({date, summa, phone, userId: user.id, products});
-            // await bot.answerWebAppQuery(queryId, {
-            //     type: 'article',
-            //     id: queryId,
-            //     title: 'Подтверждение заказа',
-            //     input_message_content: {
-            //         message_text: `Ваш заказ на сумму ${summa}, ${products.map(item => item.product.name).join(', ')}`
-            //     }
-            // });
-            // await bot.sendMessage(chatId, `Все верно?`, {
-            //     reply_markup: JSON.stringify({
-            //         inline_keyboard: [
-            //             [
-            //                 {text: 'Да, оформить заказ', callback_data: JSON.stringify({type: 'order', answer: 'yes', orderId: newOrder.id})},
-            //                 {text: 'Редактировать заказ', callback_data: JSON.stringify({type: 'order', answer: 'no', orderId: newOrder.id}), web_app: {url: process.env.FRONT_HOST + `/basket`}}
-            //             ]
-            //         ]
-            //     })
-            // })
-             await bot.sendMessage(chatId, process.env.FRONT_HOST + `/basket`)
+            await bot.answerWebAppQuery(queryId, {
+                type: 'article',
+                id: queryId,
+                title: 'Подтверждение заказа',
+                input_message_content: {
+                    message_text: `Ваш заказ на сумму ${summa}, ${products.map(item => item.product.name).join(', ')}`
+                }
+            });
+            await bot.sendMessage(chatId, `Все верно?`, {
+                reply_markup: JSON.stringify({
+                    inline_keyboard: [
+                        [
+                            {text: 'Да, оформить заказ', callback_data: JSON.stringify({type: 'order', answer: 'yes', orderId: newOrder.id})},
+                            {text: 'Редактировать заказ', callback_data: JSON.stringify({type: 'order', answer: 'no', orderId: newOrder.id})}
+                        ]
+                    ]
+                })
+            })
             return res.status(200).json({});
         }
         catch(err){
@@ -96,7 +95,7 @@ class Controller {
             const deletedOrder = await orderService.deleteOrderById(orderId);
             allOrders = await orderService.getAllOrders(userName)
             console.log(`AFTER DELETED`, allOrders)
-            return
+            return 
         }
         catch(err){
             console.log(err)
