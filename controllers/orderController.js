@@ -74,7 +74,7 @@ class Controller {
     }
     async orderConfirm(bot, msg){
         try{
-            const chatId = msg.chat.id;
+            const chatId = msg.message.chat.id;
             const userName = msg?.from?.username;
             const user = await getUserByUsername(userName);
             await basketService.deleteAllProducts({user});

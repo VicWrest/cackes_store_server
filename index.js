@@ -88,6 +88,7 @@ bot.on('callback_query', async msg => {
                 //очистить корзину
                 //Ваш заказ оформлен, спасибо за заказ
             }
+            
             if(obj.answer === 'no'){
                 await orderCancell(bot, msg, data)
                 //удалить заказ по id
