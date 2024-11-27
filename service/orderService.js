@@ -23,7 +23,7 @@ class Service {
                     orderId: order.id
                 })
             }
-            await basketService.deleteAllProducts({user});
+            
             const response = await Order.findOne({where: {id: order.id}, include: OrderItem});
             return response;
         }
@@ -40,6 +40,16 @@ class Service {
             //возможно нужго будет изменить include
             const orders = await userInDB.getOrders({include: OrderItem});
             return orders;
+        }
+        catch(err){
+            return new Error();
+        }
+    }
+
+    async deleteOrderById(orderId){
+        try{
+            const deletedOrder = await Order.destroy({where: {id: orderId}});
+            return;
         }
         catch(err){
             return new Error();

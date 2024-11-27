@@ -1,5 +1,8 @@
 const ApiError = require("../error/ApiError");
+const basketService = require("../service/basketService");
 const orderService = require("../service/orderService");
+const { getUserByUsername } = require("../service/userService");
+const { startOptions } = require("../tg-options/options");
 
 class Controller {
     async createNewOrder(req, res, next){
@@ -68,8 +71,36 @@ class Controller {
             console.log(err)
             return new Error();
         }
-
-       
     }
+    async orderConfirm(bot, msg){
+        try{
+            const chatId = msg.chat.id;
+            const userName = msg?.from?.username;
+            const user = await getUserByUsername(userName);
+            await basketService.deleteAllProducts({user});
+            return await bot.sendMessage(chatId, `Благодарим Вас за заказ🎂🧁`)
+        }
+        catch(err){
+            console.log(err)
+            return new Error();
+        }
+    };
+    async orderCancell(bot, msg, data){
+        try{
+            const chatId = msg.chat.id;
+            const userName = msg?.from?.username;
+            const {orderId} = data;
+            const allOrders = await orderService.getAllOrders(userName)
+            console.log(allOrders)
+            const deletedOrder = await orderService.deleteOrderById(orderId);
+            allOrders = await orderService.getAllOrders(userName)
+            console.log(`AFTER DELETED`, allOrders)
+            return
+        }
+        catch(err){
+            console.log(err)
+            return new Error();
+        }
+    };
 };
 module.exports = new Controller();

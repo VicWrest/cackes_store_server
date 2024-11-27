@@ -8,7 +8,7 @@ const errorHandler = require("./middleware/errorHandlerMiddlewares");
 const bodyParser = require('body-parser');
 const TelegramBot = require('node-telegram-bot-api');
 const cors = require('cors');
-const { creatingNewOrder } = require('./controllers/orderController');
+const { creatingNewOrder, orderConfirm, orderCancell } = require('./controllers/orderController');
 const commands = require('./tg-commands/commands');
 const { getErrorAndInstruction } = require('./controllers/botController');
 const botController = require('./controllers/botController');
@@ -84,11 +84,13 @@ bot.on('callback_query', async msg => {
     JSON.parse(data);
     console.log(data)
         try{
-            if(true){
+            if(data.answer === 'yes'){
+                await orderConfirm(bot, msg);
                 //очистить корзину
                 //Ваш заказ оформлен, спасибо за заказ
             }
-            if(false){
+            if(data.answer === 'no'){
+                await orderCancell(bot, msg, data)
                 //удалить заказ по id
                 //перенаправить в корзину
             }
