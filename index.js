@@ -82,7 +82,7 @@ bot.on('callback_query', async msg => {
     const chatId = msg.message.chat.id;
     const {data} = msg;
     JSON.parse(data);
-    console.log(data)
+    console.log(data.answer, data.answer === 'yes')
         try{
             if(data.answer === 'yes'){
                 await orderConfirm(bot, msg);
@@ -94,7 +94,6 @@ bot.on('callback_query', async msg => {
                 //удалить заказ по id
                 //перенаправить в корзину
             }
-            console.log(msg)
             creatingNewOrder(bot, msg);
         }
         catch(err){
