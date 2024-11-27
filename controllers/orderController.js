@@ -87,7 +87,7 @@ class Controller {
     };
     async orderCancell(bot, msg, data){
         try{
-            const chatId = msg.chat.id;
+            const chatId = msg.message.chat.id;
             const userName = msg?.from?.username;
             const {orderId} = data;
             const allOrders = await orderService.getAllOrders(userName)
