@@ -82,13 +82,14 @@ bot.on('callback_query', async msg => {
     const chatId = msg.message.chat.id;
     const {data} = msg;
     const obj = JSON.parse(data);
+    console.log(obj.answer)
         try{
             if(obj.answer === 'yes'){
                 await orderConfirm(bot, msg);
                 //очистить корзину
                 //Ваш заказ оформлен, спасибо за заказ
             }
-            
+
             if(obj.answer === 'no'){
                 await orderCancell(bot, msg, data)
                 //удалить заказ по id
