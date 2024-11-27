@@ -16,9 +16,10 @@ class Controller {
                 type: 'article',
                 id: queryId,
                 title: 'Подтверждение заказа',
-                input_message_content: {
-                    message_text: `Ваш заказ на сумму ${summa}, ${products.map(item => item.product.name).join(', ')}`
-                }
+                url: process.env.FRONT_HOST + `/basket`
+                // input_message_content: {
+                //     message_text: `Ваш заказ на сумму ${summa}, ${products.map(item => item.product.name).join(', ')}`
+                // }
             });
             await bot.sendMessage(chatId, `Все верно?`, {
                 reply_markup: JSON.stringify({
