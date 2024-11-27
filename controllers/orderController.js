@@ -93,8 +93,8 @@ class Controller {
             const allOrders = await orderService.getAllOrders(userName)
             console.log(allOrders)
             const deletedOrder = await orderService.deleteOrderById(orderId);
-            allOrders = await orderService.getAllOrders(userName)
-            console.log(`AFTER DELETED`, allOrders)
+            const afterDeleted = await orderService.getAllOrders(userName)
+            console.log(`AFTER DELETED`, afterDeleted)
             return 
         }
         catch(err){
