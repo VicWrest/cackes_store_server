@@ -78,7 +78,8 @@ class Controller {
             const userName = msg?.from?.username;
             const user = await getUserByUsername(userName);
             await basketService.deleteAllProducts({user});
-            return await bot.sendMessage(chatId, `Благодарим Вас за заказ🎂🧁`)
+            // return await bot.sendMessage(chatId, `Благодарим Вас за заказ🎂🧁`)
+            return await bot.sendMessage(1060390459, `Благодарим Вас за заказ🎂🧁`)
         }
         catch(err){
             console.log(err)
