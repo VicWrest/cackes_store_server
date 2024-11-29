@@ -9,7 +9,6 @@ class Controller {
         try{
             const user = req.user;
             const {queryId, chatId, products, date, summa, phone} = req.body;
-            console.log(req.body)
             const bot = req.bot;
             const newOrder = await orderService.createNewOrder({date, summa, phone, userId: user.id, products});
             await bot.answerWebAppQuery(queryId, {
@@ -40,9 +39,6 @@ class Controller {
 
     async creatingNewOrder(chatId, data, userName){
         try{
-            //need: 
-            //user
-            //data
             const {queryId, products, date, summa, phone} = req.body;
             await bot.answerWebAppQuery(queryId, {
                 type: 'article',
@@ -80,7 +76,7 @@ class Controller {
             const user = await getUserByUsername(userName);
             await basketService.deleteAllProducts({user});
             await bot.sendMessage(chatId, `Благодарим Вас за заказ🎂🧁`);
-            await this.sendOrderAdmin(bot, orderId)
+            const order = await this.sendOrderAdmin(bot, orderId)
             // return await bot.sendMessage(1060390459, `Благодарим Вас за заказ🎂🧁`)
         }
         catch(err){
