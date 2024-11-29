@@ -91,7 +91,7 @@ bot.on('callback_query', async msg => {
             }
 
             if(obj.answer === 'no'){
-                await orderCancell(bot, msg, data)
+                await orderCancell(bot, msg, obj)
                 return await bot.sendMessage(chatId, startOptions)
             }
             creatingNewOrder(bot, msg);
