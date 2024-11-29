@@ -46,6 +46,16 @@ class Service {
         }
     }
 
+    async getOrderById(orderId){
+        try{
+            const order = await Order.findOne({where: {id: orderId}, include: User});
+            return order;
+        }
+        catch(err){
+            return new Error();
+        }
+    }
+
     async deleteOrderById(orderId){
         try{
             const deletedAllOrders = await Order.destroy({where: {id: orderId}, force: true});

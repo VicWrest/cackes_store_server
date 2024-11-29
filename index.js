@@ -85,9 +85,7 @@ bot.on('callback_query', async msg => {
     console.log(`ANSWER`, obj.answer)
         try{
             if(obj.answer === 'yes'){
-                await orderConfirm(bot, msg);
-                //очистить корзину
-                //Ваш заказ оформлен, спасибо за заказ
+                await orderConfirm(bot, msg, obj);
             }
 
             if(obj.answer === 'no'){

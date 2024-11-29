@@ -72,14 +72,16 @@ class Controller {
             return new Error();
         }
     }
-    async orderConfirm(bot, msg){
+    async orderConfirm(bot, msg, data){
         try{
             const chatId = msg.message.chat.id;
             const userName = msg?.from?.username;
+            const {orderId} = data;
             const user = await getUserByUsername(userName);
             await basketService.deleteAllProducts({user});
-            // return await bot.sendMessage(chatId, `Благодарим Вас за заказ🎂🧁`)
-            return await bot.sendMessage(1060390459, `Благодарим Вас за заказ🎂🧁`)
+            await bot.sendMessage(chatId, `Благодарим Вас за заказ🎂🧁`);
+            await this.sendOrderAdmin(bot, orderId)
+            // return await bot.sendMessage(1060390459, `Благодарим Вас за заказ🎂🧁`)
         }
         catch(err){
             console.log(err)
@@ -92,6 +94,18 @@ class Controller {
             const userName = msg?.from?.username;
             const {orderId} = data;
             const deletedOrder = await orderService.deleteOrderById(orderId);
+            return 
+        }
+        catch(err){
+            console.log(err)
+            return new Error();
+        }
+    };
+
+    async sendOrderAdmin(bot, orderId){
+        try{
+           const order = orderService.getOrderById(orderId);
+           console.log(`ORDER FOR ADMIN`, order)
             return 
         }
         catch(err){
