@@ -97,6 +97,7 @@ bot.on('callback_query', async msg => {
             creatingNewOrder(bot, msg);
         }
         catch(err){
+            console.log(err)
             bot.sendMessage(chatId, 'Упс! Произошла серверная ошибка🙊');
             bot.sendMessage(chatId, 'Попробуйте запустить бот заново командой /start 🙃');
         }
