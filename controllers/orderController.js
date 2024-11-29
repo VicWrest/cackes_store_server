@@ -90,8 +90,8 @@ class Controller {
             const chatId = msg.message.chat.id;
             const userName = msg?.from?.username;
             const {orderId} = data;
-            // const allOrders = await orderService.getAllOrders(userName)
-            // console.log(allOrders)
+            const allOrders = await orderService.getAllOrders(userName)
+            console.log(allOrders)
             const deletedOrder = await orderService.deleteOrderById(orderId);
             const afterDeleted = await orderService.getAllOrders(userName)
             console.log(`AFTER DELETED`, afterDeleted)
