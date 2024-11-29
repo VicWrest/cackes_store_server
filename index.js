@@ -92,7 +92,7 @@ bot.on('callback_query', async msg => {
 
             if(obj.answer === 'no'){
                 await orderCancell(bot, msg, obj)
-                return await bot.sendMessage(chatId, startOptions)
+                return await bot.sendMessage(chatId, `Перейдите в корзину для редактирования заказа`, startOptions)
             }
             creatingNewOrder(bot, msg);
         }
