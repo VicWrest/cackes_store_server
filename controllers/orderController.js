@@ -100,7 +100,7 @@ class Controller {
 
     async sendOrderAdmin(bot, orderId){
         try{
-           const order = orderService.getOrderById(orderId);
+           const order = await orderService.getOrderById(orderId);
            console.log(`ORDER FOR ADMIN`, order)
             return 
         }
