@@ -12,7 +12,7 @@ const { creatingNewOrder, orderConfirm, orderCancell } = require('./controllers/
 const commands = require('./tg-commands/commands');
 const { getErrorAndInstruction } = require('./controllers/botController');
 const botController = require('./controllers/botController');
-const { startOptions } = require('./tg-options/options');
+const { startOptions, editOrderButtons } = require('./tg-options/options');
 
 const PORT = process.env.PORT || 8000;
 const TOKEN = process.env.TOKEN_BOT;
@@ -92,7 +92,7 @@ bot.on('callback_query', async msg => {
 
             if(obj.answer === 'no'){
                 await orderCancell(bot, msg, obj)
-                return await bot.sendMessage(chatId, `Перейдите в корзину для редактирования заказа`, startOptions)
+                return await bot.sendMessage(chatId, `Перейдите в корзину для редактирования заказа`, editOrderButtons)
             }
             creatingNewOrder(bot, msg);
         }

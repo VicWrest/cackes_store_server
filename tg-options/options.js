@@ -12,8 +12,18 @@ module.exports = {
                 ]
             ]
         })
-    }
+    },
 
+        editOrderButtons: {
+            reply_markup: JSON.stringify({
+                inline_keyboard: [
+                    [
+                        {text: 'Выбрать дессерт', web_app: {url: process.env.FRONT_HOST}},
+                        {text: 'Корзина', web_app: {url: process.env.FRONT_HOST + `/basket`}}
+                    ]
+                ]
+            })
+        }
     // orderButtons: {
     //     reply_markup: JSON.stringify({
     //         inline_keyboard: [
