@@ -25,6 +25,7 @@ class Service {
             }
             
             const response = await Order.findOne({where: {id: order.id}, include: OrderItem});
+            console.log(`RESPONSE BY ORDERSERVICE, `, response)
             return response;
         }
         catch(err){
