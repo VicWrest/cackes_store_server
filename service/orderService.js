@@ -48,7 +48,7 @@ class Service {
 
     async getOrderById(orderId){
         try{
-            const order = await Order.findOne({where: {id: orderId}, include: User});
+            const order = await Order.findOne({where: {id: orderId}, include: User, OrderItem});
             return order;
         }
         catch(err){
