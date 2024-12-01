@@ -25,7 +25,6 @@ class Service {
             }
             
             const response = await Order.findOne({where: {id: order.id}, include: OrderItem});
-            console.log(`RESPONSE BY ORDERSERVICE, `, response)
             return response;
         }
         catch(err){
@@ -49,7 +48,7 @@ class Service {
 
     async getOrderById(orderId){
         try{
-            const order = await Order.findOne({where: {id: orderId}, include: User, OrderItem});
+            const order = await Order.findOne({where: {id: orderId}, include: [{model: User, as: 'user'}, {model: OrderItem, as: 'order_item'}]});
             return order;
         }
         catch(err){
