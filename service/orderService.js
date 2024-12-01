@@ -52,6 +52,7 @@ class Service {
             return order;
         }
         catch(err){
+            console.log(err)
             return new Error();
         }
     }
