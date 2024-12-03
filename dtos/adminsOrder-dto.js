@@ -27,14 +27,15 @@ module.exports = class Dto {
         
     }
     get messageForAdmin(){
-        let mainMessage = `номер заказа: ${this.orderId}
+        let mainMessage = 
+            `номер заказа: ${this.orderId}
             дата и время создания заказа: ${this.order_date}
             сумма заказа: ${this.summa}
             имя пользователя: @${this.user_name}
             телефон для связи: ${this.phone}
             необходимо выполнить к: ${this.due_date}
             сумма заказа: ${this.summa}
-        `
+            `
         for (const product of this.products){
             mainMessage +=
             `название дессерта: ${product.productName}
