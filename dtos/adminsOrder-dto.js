@@ -28,7 +28,8 @@ module.exports = class Dto {
     }
     get messageForAdmin(){
         let mainMessage = 
-            `номер заказа: ${this.orderId}
+            `
+            номер заказа: ${this.orderId}
             дата и время создания заказа: ${this.order_date}
             сумма заказа: ${this.summa}
             имя пользователя: @${this.user_name}
