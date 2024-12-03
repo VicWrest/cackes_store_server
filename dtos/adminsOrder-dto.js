@@ -42,5 +42,6 @@ module.exports = class Dto {
             вес: ${product.weight}
             количество: ${product.quantity}`
         }
+        return mainMessage;
     }
 }
