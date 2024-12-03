@@ -1,3 +1,4 @@
+const Dto = require("../dtos/adminsOrder-dto");
 const ApiError = require("../error/ApiError");
 const basketService = require("../service/basketService");
 const orderService = require("../service/orderService");
@@ -101,7 +102,24 @@ class Controller {
     async sendOrderAdmin(bot, orderId){
         try{
            const order = await orderService.getOrderById(orderId);
-           console.log(`ORDER FOR ADMIN`, order)
+        //    const message = new Dto({
+        //     orderId: order.id, 
+        //     due_date: order.date, 
+        //     summa: order.summa, 
+        //     phone: order.phone,
+        //     order_date: order.createdAt,
+        //     user_name: order.user.name,
+        //     products: order.order_item
+        //    })
+            console.log({
+                    orderId: order.id, 
+                    due_date: order.date, 
+                    summa: order.summa, 
+                    phone: order.phone,
+                    order_date: order.createdAt,
+                    user_name: order.user.name,
+                    products: order.order_item
+                   })
             return 
         }
         catch(err){

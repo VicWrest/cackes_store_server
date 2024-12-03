@@ -49,8 +49,6 @@ class Service {
     async getOrderById(orderId){
         try{
             const order = await Order.findOne({where: {id: orderId}, include: [{model: User, as: 'user'}, {model: OrderItem, as: 'order_items'}]});
-            const {order_items} = order;
-            console.log(`ORDER ITEMS`, order_items)
             return order;
         }
         catch(err){

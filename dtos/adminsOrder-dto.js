@@ -5,6 +5,7 @@ module.exports = class Dto {
     phone;
     create_order_date;
     user_name;
+    products;
     constructor(model) {
         this.orderId = model.orderId;
         this.due_date= this.getDate(model.due_date);
@@ -12,6 +13,7 @@ module.exports = class Dto {
         this.phone= model.phone;
         this.order_date= this.getDate(model.order_date);
         this.user_name= model.user_name;
+        this.products = model.products;
     }
     static getDate(date){
         const dat = new Date(date);
@@ -25,9 +27,20 @@ module.exports = class Dto {
         
     }
     get messageForAdmin(){
-        const message = `номер заказа: ${this.orderId}
+        const mainMessage = `номер заказа: ${this.orderId}
             дата и время создания заказа: ${this.order_date}
-            дата и время создания заказа: ${this.order_date}
+            сумма заказа: ${this.summa}
+            имя пользователя: ${this.user_name}
+            телефон для связи: ${this.phone}
+            необходимо выполнить к: ${this.due_date}
+            сумма заказа: ${this.summa}
         `
+        for (const product of products){
+            mainMessage +=
+            `название дессерта: ${product.product_name}
+            вкус коржа: ${product.korzh_name}
+            вес: ${product.weight}
+            количество: ${product.quantity}`
+        }
     }
 }
