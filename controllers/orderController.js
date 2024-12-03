@@ -102,25 +102,27 @@ class Controller {
     async sendOrderAdmin(bot, orderId){
         try{
            const order = await orderService.getOrderById(orderId);
-        //    const message = new Dto({
-        //     orderId: order.id, 
-        //     due_date: order.date, 
-        //     summa: order.summa, 
-        //     phone: order.phone,
-        //     order_date: order.createdAt,
-        //     user_name: order.user.name,
-        //     products: order.order_item
-        //    })
-            console.log({
-                    orderId: order.id, 
-                    due_date: order.date, 
-                    summa: order.summa, 
-                    phone: order.phone,
-                    order_date: order.createdAt,
-                    user_name: order.user.name,
-                    products: order.order_items,
-                    product_name: order.order_items[0].productName,
-                   })
+           const message = new Dto({
+            orderId: order.id, 
+            due_date: order.date, 
+            summa: order.summa, 
+            phone: order.phone,
+            order_date: order.createdAt,
+            user_name: order.user.name,
+            products: order.order_item
+           }).messageForAdmin;
+           console.log(message)
+
+            // console.log({
+            //         orderId: order.id, 
+            //         due_date: order.date, 
+            //         summa: order.summa, 
+            //         phone: order.phone,
+            //         order_date: order.createdAt,
+            //         user_name: order.user.name,
+            //         products: order.order_items,
+            //         product_name: order.order_items[0].productName,
+            //        })
             return 
         }
         catch(err){
