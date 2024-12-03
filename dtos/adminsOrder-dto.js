@@ -39,8 +39,7 @@ module.exports = class Dto {
         for (const [index, product] of this.products.entries()){
             mainMessage +=
             `
-            ${index})
-            название дессерта: ${product.productName}
+            ${index+1})название дессерта: ${product.productName}
             вкус коржа: ${product.korzhName}
             вес: ${product.weight}
             количество: ${product.quantity}
