@@ -118,7 +118,8 @@ class Controller {
                     phone: order.phone,
                     order_date: order.createdAt,
                     user_name: order.user.name,
-                    products: order.order_items
+                    products: order.order_items,
+                    product_name: order.order_items[0].product_name,
                    })
             return 
         }
