@@ -36,12 +36,16 @@ module.exports = class Dto {
             необходимо выполнить к: ${this.due_date}
             сумма заказа: ${this.summa}
             `
-        for (const product of this.products){
+        for (const [index, product] of this.products.entries()){
             mainMessage +=
-            `название дессерта: ${product.productName}
+            `
+            ${index})
+            название дессерта: ${product.productName}
             вкус коржа: ${product.korzhName}
             вес: ${product.weight}
-            количество: ${product.quantity}`
+            количество: ${product.quantity}
+            
+            `
         }
         return mainMessage;
     }
