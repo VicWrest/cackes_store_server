@@ -15,7 +15,7 @@ module.exports = class Dto {
         this.user_name= model.user_name;
         this.products = model.products;
     }
-    static getDate(date){
+    getDate(date){
         const dat = new Date(date);
         const year = dat.getFullYear();
         const month = dat.getMonth()
