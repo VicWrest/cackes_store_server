@@ -37,8 +37,8 @@ module.exports = class Dto {
         `
         for (const product of products){
             mainMessage +=
-            `название дессерта: ${product.product_name}
-            вкус коржа: ${product.korzh_name}
+            `название дессерта: ${product.productName}
+            вкус коржа: ${product.korzhName}
             вес: ${product.weight}
             количество: ${product.quantity}`
         }

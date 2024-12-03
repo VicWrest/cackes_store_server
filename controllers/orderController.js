@@ -119,7 +119,7 @@ class Controller {
                     order_date: order.createdAt,
                     user_name: order.user.name,
                     products: order.order_items,
-                    product_name: order.order_items[0].product_name,
+                    product_name: order.order_items[0].productName,
                    })
             return 
         }
