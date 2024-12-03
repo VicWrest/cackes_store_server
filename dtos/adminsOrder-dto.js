@@ -30,7 +30,7 @@ module.exports = class Dto {
         let mainMessage = `номер заказа: ${this.orderId}
             дата и время создания заказа: ${this.order_date}
             сумма заказа: ${this.summa}
-            имя пользователя: ${this.user_name}
+            имя пользователя: @${this.user_name}
             телефон для связи: ${this.phone}
             необходимо выполнить к: ${this.due_date}
             сумма заказа: ${this.summa}

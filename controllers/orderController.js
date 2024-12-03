@@ -77,7 +77,7 @@ class Controller {
             const user = await getUserByUsername(userName);
             await basketService.deleteAllProducts({user});
             await bot.sendMessage(chatId, `Благодарим Вас за заказ🎂🧁`);
-            const order = await this.sendOrderAdmin(bot, orderId)
+            const order = await this.sendOrderAdmin(bot, chatId, orderId)
             // return await bot.sendMessage(1060390459, `Благодарим Вас за заказ🎂🧁`)
         }
         catch(err){
@@ -99,7 +99,7 @@ class Controller {
         }
     };
 
-    async sendOrderAdmin(bot, orderId){
+    async sendOrderAdmin(bot, chatId, orderId){
         try{
            const order = await orderService.getOrderById(orderId);
            const message = new Dto({
@@ -112,7 +112,7 @@ class Controller {
             products: order.order_items
            }).messageForAdmin;
            console.log(message)
-
+           await bot.sendMessage(chatId, message);
             // console.log({
             //         orderId: order.id, 
             //         due_date: order.date, 
