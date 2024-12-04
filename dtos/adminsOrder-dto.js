@@ -34,7 +34,9 @@ module.exports = class Dto {
 имя пользователя: @${this.user_name}
 телефон для связи: ${this.phone}
 необходимо выполнить к: ${this.due_date}
-сумма заказа: ${this.summa}`
+сумма заказа: ${this.summa}
+
+`
         for (const [index, product] of this.products.entries()){
             mainMessage +=
             `${index+1})название дессерта: ${product.productName}
