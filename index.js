@@ -59,7 +59,6 @@ bot.setMyCommands(commands)
 bot.on('message', async msg => {
     const text = msg.text;
     const chatId = msg.chat.id;
-    console.log(msg)
     if(msg?.via_bot){ //если сообщение отправлено ботом от имени пользователя
         return;
     }

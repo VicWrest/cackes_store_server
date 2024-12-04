@@ -4,6 +4,7 @@ const basketService = require("../service/basketService");
 const orderService = require("../service/orderService");
 const { getUserByUsername } = require("../service/userService");
 const { startOptions } = require("../tg-options/options");
+require('dotenv').config();
 
 class Controller {
     async createNewOrder(req, res, next){
@@ -78,7 +79,7 @@ class Controller {
             await basketService.deleteAllProducts({user});
             await bot.sendMessage(chatId, `Благодарим Вас за заказ🎂🧁`);
             const order = await this.sendOrderAdmin(bot, chatId, orderId)
-            // return await bot.sendMessage(1060390459, `Благодарим Вас за заказ🎂🧁`)
+            return;
         }
         catch(err){
             console.log(err)
@@ -111,7 +112,7 @@ class Controller {
             user_name: order.user.name,
             products: order.order_items
            }).messageForAdmin;
-           await bot.sendMessage(chatId, message);
+           await bot.sendMessage(process.env.ADMIN_CHAT_ID, message);
             return 
         }
         catch(err){
