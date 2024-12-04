@@ -111,18 +111,7 @@ class Controller {
             user_name: order.user.name,
             products: order.order_items
            }).messageForAdmin;
-           console.log(message)
            await bot.sendMessage(chatId, message);
-            // console.log({
-            //         orderId: order.id, 
-            //         due_date: order.date, 
-            //         summa: order.summa, 
-            //         phone: order.phone,
-            //         order_date: order.createdAt,
-            //         user_name: order.user.name,
-            //         products: order.order_items,
-            //         product_name: order.order_items[0].productName,
-            //        })
             return 
         }
         catch(err){
