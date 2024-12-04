@@ -40,7 +40,9 @@ module.exports = class Dto {
             `${index+1})название дессерта: ${product.productName}
 вкус коржа: ${product.korzhName}
 вес: ${product.weight}
-количество: ${product.quantity}`
+количество: ${product.quantity}
+
+`
         }
         return mainMessage;
     }
