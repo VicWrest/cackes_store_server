@@ -20,9 +20,9 @@ module.exports = class Dto {
         console.log(dat)
         const year = dat.getFullYear();
         const month = dat.getMonth() + 1;
-        console.log(month);
         const day = dat.getDate();
         const hour = Number(dat.getHours()) + 10;
+        console.log(hour);
         const minutes = dat.getMinutes();
         const transformDate = `${day}/${month}/${year} ${hour}:${minutes}`
         return transformDate;
