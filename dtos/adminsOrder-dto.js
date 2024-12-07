@@ -18,10 +18,9 @@ module.exports = class Dto {
         this.products = model.products;
     }
     getDate(date){
-        moment(date)
-        const vlad = moment.utcOffset(10).format("HH:mm")
-        console.log(`VLADIVOSTOK`, vlad)
         const dat = new Date(date);
+        console.log(date)
+        console.log(dat)
         const year = dat.getFullYear();
         const month = dat.getMonth() + 1;
         const day = dat.getDate();
