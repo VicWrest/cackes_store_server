@@ -18,15 +18,16 @@ module.exports = class Dto {
         this.products = model.products;
     }
     getDate(date){
-        var newYork = moment.tz(date, "America/New_York")
-        const dat = new Date(date);
+        const newYork = moment.tz(date, "America/New_York");
+        const LA = newYork.clone().tz("America/Los_Angeles");
         console.log(dat)
-        console.log(newYork)
+        console.log(newYork.format())
+        console.log(LA.format())
+        const dat = new Date(date);
         const year = dat.getFullYear();
         const month = dat.getMonth() + 1;
         const day = dat.getDate();
         const hour = Number(dat.getHours()) + 10;
-        console.log(hour);
         const minutes = dat.getMinutes();
         const transformDate = `${day}/${month}/${year} ${hour}:${minutes}`
         return transformDate;
