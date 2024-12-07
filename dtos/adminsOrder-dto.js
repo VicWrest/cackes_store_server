@@ -22,7 +22,7 @@ module.exports = class Dto {
         const LA = newYork.clone().tz("America/Los_Angeles");
         console.log(dat)
         console.log(newYork.format())
-        console.log(LA.format())
+        console.log(`LA`, LA.format())
         const dat = new Date(date);
         const year = dat.getFullYear();
         const month = dat.getMonth() + 1;
