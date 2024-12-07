@@ -1,7 +1,4 @@
-const { compareSync } = require("bcryptjs");
 const ApiError = require("../error/ApiError");
-const { Product, Basket, BasketProduct } = require("../models/models");
-const { addProductInBasket, getProducts } = require("../service/basketService");
 const Service = require('../service/basketService')
 
 class Controller {
@@ -10,6 +7,7 @@ class Controller {
             const user = req.user;
             const {productId, korzhId, weightId} = req.body;
             const addedProducts = await Service.addProductInBasket({user, productId, korzhId, weightId});
+            console.log(`ADD PRODUCT_IN_BASKET`, addedProducts)
             return res.json(addedProducts);
         }
         catch(err){
@@ -21,6 +19,7 @@ class Controller {
     async getProducts(req, res, next){
         try{
             const products = await Service.getProducts(req.user);
+            console.log(`GET PRODUCT_IN_BASKET`, products)
             return res.status(200).json(products);
         }
         catch(err){

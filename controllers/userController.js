@@ -1,6 +1,4 @@
 const ApiError = require("../error/ApiError");
-const { Review } = require("../models/models");
-const { downloadImg } = require("../service/ReviewService");
 const userService = require("../service/userService");
 
 class UserController {
@@ -8,6 +6,7 @@ class UserController {
     async login(req, res, next){
         try {
 			const addedUser = await userService.login(req.body);
+            console.log(`REGISTRATION`, addedUser)
 			res.status(200).json(addedUser);
 		}
         catch(err){
