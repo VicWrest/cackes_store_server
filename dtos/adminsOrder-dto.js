@@ -1,3 +1,5 @@
+const moment = require('moment-timezone')
+
 module.exports = class Dto {
     orderId;
     date;
@@ -16,10 +18,10 @@ module.exports = class Dto {
         this.products = model.products;
     }
     getDate(date){
+        var newYork = moment.tz(date, "America/New_York")
         const dat = new Date(date);
-        const tz = dat.getTimezoneOffset();
         console.log(dat)
-        console.log(tz)
+        console.log(newYork)
         const year = dat.getFullYear();
         const month = dat.getMonth() + 1;
         const day = dat.getDate();
