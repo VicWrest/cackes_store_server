@@ -18,11 +18,9 @@ module.exports = class Dto {
         this.products = model.products;
     }
     getDate(date){
-        const newYork = moment.tz(date, "America/New_York");
-        const LA = newYork.clone().tz("America/Los_Angeles");
-        console.log(date)
-        console.log(newYork.format())
-        console.log(`LA`, LA.format())
+        moment(date)
+        const vlad = moment.utcOffset(10).format("HH:mm")
+        console.log(`VLADIVOSTOK`, vlad)
         const dat = new Date(date);
         const year = dat.getFullYear();
         const month = dat.getMonth() + 1;
