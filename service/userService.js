@@ -13,7 +13,7 @@ class UserService {
 		}
 		const addedUser = await User.create({name: userName});
         const token =  tokenService.generateToken(addedUser.id, addedUser.name, addedUser.role)
-		return token;
+		return {token};
 	}
 	async login(data) {
 		try{
