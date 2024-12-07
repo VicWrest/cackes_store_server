@@ -20,6 +20,7 @@ module.exports = class Dto {
     getDate(date){
         const newYork = moment.tz(date, "America/New_York");
         const LA = newYork.clone().tz("America/Los_Angeles");
+        console.log(date)
         console.log(newYork.format())
         console.log(`LA`, LA.format())
         const dat = new Date(date);
