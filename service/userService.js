@@ -18,7 +18,8 @@ class UserService {
 	async login(data) {
 		try{
 		const {userName} = data;
-        const user = await User.findOne({where: {name: userName}})
+		console.log(`userName`, userName)
+        const user = await User.findOne({where: {name: userName}});
 		if(!user) {
             return await this.registration(data);
 		};
