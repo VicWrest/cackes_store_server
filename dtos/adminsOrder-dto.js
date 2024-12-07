@@ -1,4 +1,5 @@
-const moment = require('moment-timezone')
+const moment = require('moment-timezone');
+const { DATE } = require('sequelize');
 
 module.exports = class Dto {
     orderId;
@@ -19,10 +20,10 @@ module.exports = class Dto {
     }
     getDate(date){
         const dat = new Date(date);
-        const d = new Date();
-        let diff = d.getTimezoneOffset();
-        console.log(d)
-        console.log(diff)
+        const ms = dat.getTime();
+        console.log(ms)
+        const newDAte = new Date(ms + (60 * 10 * 60 * 100))
+        console.log(newDAte)
         const year = dat.getFullYear();
         const month = dat.getMonth() + 1;
         const day = dat.getDate();
