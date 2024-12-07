@@ -23,6 +23,7 @@ module.exports = class Dto {
         const ms = dat.getTime();
         console.log(ms)
         const newDAte = new Date(ms + (60 * 10 * 60 * 100))
+        console.log(dat)
         console.log(newDAte)
         const year = dat.getFullYear();
         const month = dat.getMonth() + 1;
