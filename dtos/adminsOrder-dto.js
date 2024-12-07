@@ -17,8 +17,10 @@ module.exports = class Dto {
     }
     getDate(date){
         const dat = new Date(date);
+        console.log(dat)
         const year = dat.getFullYear();
         const month = dat.getMonth() + 1;
+        console.log(month);
         const day = dat.getDate();
         const hour = Number(dat.getHours()) + 10;
         const minutes = dat.getMinutes();
