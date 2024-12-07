@@ -27,7 +27,7 @@ module.exports = class Dto {
         const day = newDate.getDate();
         const hour = newDate.getHours();
         const minutes = newDate.getMinutes();
-        const transformDate = `${day}/${month}/${year} ${hour}:${minutes}`
+        const transformDate = `${day}/${month}/${year} ${hour}:${minutes < 10? `0`+minutes : minutes}`
         return transformDate;
         
     }
