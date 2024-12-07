@@ -21,15 +21,12 @@ module.exports = class Dto {
     getDate(date){
         const dat = new Date(date);
         const ms = dat.getTime();
-        console.log(ms)
-        const newDAte = new Date(ms + (60 * 10 * 60 * 1000))
-        console.log(dat)
-        console.log(newDAte)
-        const year = dat.getFullYear();
-        const month = dat.getMonth() + 1;
-        const day = dat.getDate();
-        const hour = Number(dat.getHours()) + 10;
-        const minutes = dat.getMinutes();
+        const newDate = new Date(ms + (60 * 10 * 60 * 1000)) //прибавление 10ч в ms
+        const year = newDate.getFullYear();
+        const month = newDate.getMonth() + 1;
+        const day = newDate.getDate();
+        const hour = newDate.getHours();
+        const minutes = newDate.getMinutes();
         const transformDate = `${day}/${month}/${year} ${hour}:${minutes}`
         return transformDate;
         
