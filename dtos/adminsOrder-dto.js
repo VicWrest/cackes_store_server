@@ -17,7 +17,9 @@ module.exports = class Dto {
     }
     getDate(date){
         const dat = new Date(date);
+        const tz = d.getTimezoneOffset();
         console.log(dat)
+        console.log(tz)
         const year = dat.getFullYear();
         const month = dat.getMonth() + 1;
         const day = dat.getDate();
