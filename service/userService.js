@@ -22,7 +22,7 @@ class UserService {
 		if(!user) {
             return await this.registration(data);
 		};
-		
+		console.log(`USER BY LOGIN`, user)
 		const token = await tokenService.generateToken(user.id, user.name, user.role);
 		return {token};
 		}
