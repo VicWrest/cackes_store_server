@@ -63,8 +63,18 @@ bot.on('message', async msg => {
         return;
     }
     if(text === '/start'){
-        await bot.sendPhoto(chatId, './static/mainPhoto/startPhoto.jpeg')            
-        return await bot.sendMessage(chatId, `Добро пожаловать в домашнюю Мастерскую вкусных десертов Tsyganova's cakes🎂🧁`, startOptions)
+        await bot.sendMessage(msg.chat.id, `Меню бота`, {
+
+            reply_markup: {
+                keyboard: [
+                    {text: '⭐️ Контакт', request_contact: true}
+                ],
+                resize_keyboard: true
+            }
+    
+        })
+        // await bot.sendPhoto(chatId, './static/mainPhoto/startPhoto.jpeg')            
+        // return await bot.sendMessage(chatId, `Добро пожаловать в домашнюю Мастерскую вкусных десертов Tsyganova's cakes🎂🧁`, startOptions)
     }
     if(text === '/myOrders'){
         botController.getOrders(bot, msg);   
