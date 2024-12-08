@@ -109,11 +109,13 @@ bot.on('callback_query', async msg => {
         }
     });
 
-    bot.on('contact', async contact => {
+    bot.on('contact', async msg=> {
 
         try {
-            console.log(contact);
-            // await bot.sendMessage(contact.chat.id, `Номер контакта: ${contact.contact.phone_number}\nИмя контакта: ${contact.contact.first_name}`);
+            console.log(msg);
+            await bot.sendContact(msg.chat.id, msg.contact.phone_number, `Контакт`, {
+                reply_to_message_id: msg.message_id
+            });
         }
         catch(error) {
             console.log(error);
