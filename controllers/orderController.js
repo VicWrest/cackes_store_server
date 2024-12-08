@@ -82,7 +82,7 @@ class Controller {
             await basketService.deleteAllProducts({user});
             //await bot.sendMessage(chatId, `Благодарим Вас за заказ🎂🧁`);
             await bot.sendMessage(chatId, `Для окончания оформления заказа необходимо подтвердить номер телефона`);
-            await bot.sendMessage(msg.chat.id, {
+            await bot.sendMessage(chatId, {
                 reply_markup: {
                     keyboard: [
                         [{text: '✅ Подтвердить номер телефона', request_contact: true}]
