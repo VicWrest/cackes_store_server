@@ -75,7 +75,7 @@ class Controller {
             const chatId = msg.message.chat.id;
             console.log(msg)
             const {username, id} = msg.from;
-            let userName =  username? username : id;
+            let userName =  username? username : `${id}`;
             console.log(userName)
             const {orderId} = data;
             const user = await getUserByUsername(userName);
