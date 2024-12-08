@@ -10,9 +10,9 @@ const TelegramBot = require('node-telegram-bot-api');
 const cors = require('cors');
 const orderController = require('./controllers/orderController');
 const commands = require('./tg-commands/commands');
-const { getErrorAndInstruction } = require('./controllers/botController');
 const botController = require('./controllers/botController');
 const { startOptions, editOrderButtons } = require('./tg-options/options');
+const { confirmPhone, welcome, badRequest, getCommands, goToCart, serverError, restartBot, acceptOrder } = require('./options/options');
 
 const PORT = process.env.PORT || 8000;
 const TOKEN = process.env.TOKEN_BOT;
@@ -61,24 +61,24 @@ bot.on('message', async msg => {
     const text = msg.text;
     const chatId = msg.chat.id;
     const replyText = msg?.reply_to_message?.text;
-    if(replyText === 'Для окончания оформления заказа необходимо подтвердить номер телефона'){
+    if(replyText === confirmPhone){
         return;
     }
-    if(msg?.via_bot){ //если сообщение отправлено ботом от имени пользователя
+    if(msg?.via_bot){
         return;
     }
     if(text === '/start'){
-        await bot.sendPhoto(chatId, './static/mainPhoto/startPhoto.jpeg')            
-        return await bot.sendMessage(chatId, `Добро пожаловать в домашнюю Мастерскую вкусных десертов Tsyganova's cakes🎂🧁`, startOptions)
+        await bot.sendPhoto(chatId, process.env.MAIN_PHOTO_PATH)            
+        return await bot.sendMessage(chatId, welcome, startOptions)
     }
     if(text === '/myOrders'){
         botController.getOrders(bot, msg);   
         return; 
     }
     else {
-        await bot.sendMessage(chatId, 'Упс!Я вас не понял 🙊');
-        await bot.sendPhoto(chatId, './static/mainPhoto/instruction.png') 
-        return await bot.sendMessage(chatId, `Нажмите на показанную выше кнопку, чтобы просмотреть мои команды `)
+        await bot.sendMessage(chatId, badRequest);
+        await bot.sendPhoto(chatId, INSTRUCTION_PHOTO_PATH) 
+        return await bot.sendMessage(chatId, getCommands)
     }
 })
 
@@ -93,26 +93,25 @@ bot.on('callback_query', async msg => {
 
             if(obj.answer === 'no'){
                 await orderController.orderCancell(bot, msg, obj)
-                return await bot.sendMessage(chatId, `Перейдите в корзину для редактирования заказа`, editOrderButtons)
+                return await bot.sendMessage(chatId, goToCart, editOrderButtons)
             }
             orderController.creatingNewOrder(bot, msg);
         }
         catch(err){
             console.log(err)
-            bot.sendMessage(chatId, 'Упс! Произошла серверная ошибка🙊');
-            bot.sendMessage(chatId, 'Попробуйте запустить бот заново командой /start 🙃');
+            bot.sendMessage(chatId, serverError);
+            bot.sendMessage(chatId, restartBot);
         }
     });
 
     bot.on('contact', async msg=> {
             const chatId = msg.chat.id;
         try {
-            await bot.sendMessage(chatId, 'Ваш заказ принят! Благодарим Вас за заказ🎂🧁', {
+            await bot.sendMessage(chatId, acceptOrder, {
                 reply_markup: {
                     remove_keyboard: true
                 }
             })
-            //await bot.sendMessage(chatId, `Ваш заказ принят! Благодарим Вас за заказ🎂🧁`);
             await bot.sendContact(process.env.ADMIN_CHAT_ID, msg.contact.phone_number, `Контакт`);
         }
         catch(error) {
