@@ -21,11 +21,12 @@ class Controller {
                     message_text: `Ваш заказ на сумму ${summa}, ${products.map(item => item.product.name).join(', ')}`
                 }
             });
+            //callback_data: JSON.stringify({type: 'order', answer: 'yes', orderId: newOrder.id})
             await bot.sendMessage(chatId, `Все верно?`, {
                 reply_markup: JSON.stringify({
                     inline_keyboard: [
                         [
-                            {text: 'Да, оформить заказ', request_contact: true, callback_data: JSON.stringify({type: 'order', answer: 'yes', orderId: newOrder.id})},
+                            {text: 'Да, оформить заказ', request_contact: true},
                             {text: 'Редактировать заказ', callback_data: JSON.stringify({type: 'order', answer: 'no', orderId: newOrder.id})}
                         ]
                     ]
