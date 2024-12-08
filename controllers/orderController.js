@@ -74,15 +74,24 @@ class Controller {
     async orderConfirm(bot, msg, data){
         try{
             const chatId = msg.message.chat.id;
-            console.log(msg)
             const {username, id} = msg.from;
             let userName =  username? username : `${id}`;
             console.log(userName)
             const {orderId} = data;
             const user = await getUserByUsername(userName);
             await basketService.deleteAllProducts({user});
-            await bot.sendMessage(chatId, `Благодарим Вас за заказ🎂🧁`);
-            const order = await this.sendOrderAdmin(bot, chatId, orderId)
+            //await bot.sendMessage(chatId, `Благодарим Вас за заказ🎂🧁`);
+            await bot.sendMessage(chatId, `Для окончания оформления заказа необходимо подтвердить номер телефона`);
+            await bot.sendMessage(msg.chat.id, {
+                reply_markup: {
+                    keyboard: [
+                        [{text: '✅ Подтвердить номер телефона', request_contact: true}]
+                    ],
+                    resize_keyboard: true
+                }
+        
+            })
+            const order = await this.sendOrderAdmin(bot, orderId)
             return;
         }
         catch(err){
@@ -104,7 +113,7 @@ class Controller {
         }
     };
 
-    async sendOrderAdmin(bot, chatId, orderId){
+    async sendOrderAdmin(bot, orderId){
         try{
            const order = await orderService.getOrderById(orderId);
            const message = new Dto({

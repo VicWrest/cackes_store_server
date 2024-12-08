@@ -63,18 +63,8 @@ bot.on('message', async msg => {
         return;
     }
     if(text === '/start'){
-        await bot.sendMessage(msg.chat.id, `Меню бота`, {
-
-            reply_markup: {
-                keyboard: [
-                    [{text: '⭐️ Контакт', request_contact: true}]
-                ],
-                resize_keyboard: true
-            }
-    
-        })
-        // await bot.sendPhoto(chatId, './static/mainPhoto/startPhoto.jpeg')            
-        // return await bot.sendMessage(chatId, `Добро пожаловать в домашнюю Мастерскую вкусных десертов Tsyganova's cakes🎂🧁`, startOptions)
+        await bot.sendPhoto(chatId, './static/mainPhoto/startPhoto.jpeg')            
+        return await bot.sendMessage(chatId, `Добро пожаловать в домашнюю Мастерскую вкусных десертов Tsyganova's cakes🎂🧁`, startOptions)
     }
     if(text === '/myOrders'){
         botController.getOrders(bot, msg);   
@@ -112,8 +102,8 @@ bot.on('callback_query', async msg => {
     bot.on('contact', async msg=> {
 
         try {
-            console.log(msg);
-            await bot.sendContact('808915653', msg.contact.phone_number, `Контакт`);
+            await bot.sendMessage(chatId, `Ваш заказ принят! Благодарим Вас за заказ🎂🧁`);
+            await bot.sendContact(process.env.ADMIN_CHAT_ID, msg.contact.phone_number, `Контакт`);
         }
         catch(error) {
             console.log(error);
