@@ -57,6 +57,7 @@ start();
 bot.setMyCommands(commands)
 
 bot.on('message', async msg => {
+    console.log(msg)
     const text = msg.text;
     const chatId = msg.chat.id;
     if(msg?.via_bot){ //если сообщение отправлено ботом от имени пользователя
@@ -100,7 +101,7 @@ bot.on('callback_query', async msg => {
     });
 
     bot.on('contact', async msg=> {
-
+            const chatId = msg.chat.id;
         try {
             await bot.sendMessage(chatId, `Ваш заказ принят! Благодарим Вас за заказ🎂🧁`);
             await bot.sendContact(process.env.ADMIN_CHAT_ID, msg.contact.phone_number, `Контакт`);
