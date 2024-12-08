@@ -5,8 +5,7 @@ const tokenService = require('./tokenService.js');
 require('dotenv').config();
 
 class UserService {
-	async registration(data) {
-		const {userName} = data;
+	async registration(userName) {
 		const candidate = await User.findOne({where: {name: userName}});
 		if(candidate) {
 			return;
@@ -22,7 +21,7 @@ class UserService {
 		let userName = username? username : `${id}`;
         const user = await User.findOne({where: {name: userName}});
 		if(!user) {
-            return await this.registration(data);
+            return await this.registration(userName);
 		};
 		console.log(`USER BY LOGIN`, user)
 		const token = await tokenService.generateToken(user.id, user.name, user.role);
