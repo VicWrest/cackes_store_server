@@ -60,6 +60,10 @@ bot.on('message', async msg => {
     console.log(msg)
     const text = msg.text;
     const chatId = msg.chat.id;
+    const replyText = msg?.reply_to_message?.text;
+    if(replyText === 'Для окончания оформления заказа необходимо подтвердить номер телефона'){
+        return;
+    }
     if(msg?.via_bot){ //если сообщение отправлено ботом от имени пользователя
         return;
     }
