@@ -61,10 +61,11 @@ bot.on('message', async msg => {
     const text = msg.text;
     const chatId = msg.chat.id;
     const replyText = msg?.reply_to_message?.text;
+    const contact = msg?.contact;
     if(replyText === confirmPhone){
         return;
     }
-    if(msg?.via_bot){
+    if(msg?.via_bot || contact){
         return;
     }
     if(text === '/start'){
