@@ -99,3 +99,14 @@ bot.on('callback_query', async msg => {
         }
     });
 
+    bot.on('contact', async contact => {
+
+        try {
+            console.log(contact);
+            // await bot.sendMessage(contact.chat.id, `Номер контакта: ${contact.contact.phone_number}\nИмя контакта: ${contact.contact.first_name}`);
+        }
+        catch(error) {
+            console.log(error);
+        }
+    })
+
