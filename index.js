@@ -57,7 +57,7 @@ start();
 bot.setMyCommands(commands)
 
 bot.on('message', async msg => {
-    console.log(msg)
+    console.log(`msg`, msg)
     const text = msg.text;
     const chatId = msg.chat.id;
     const replyText = msg?.reply_to_message?.text;
@@ -77,7 +77,7 @@ bot.on('message', async msg => {
     }
     else {
         await bot.sendMessage(chatId, badRequest);
-        await bot.sendPhoto(chatId, INSTRUCTION_PHOTO_PATH) 
+        await bot.sendPhoto(chatId, process.env.INSTRUCTION_PHOTO_PATH) 
         return await bot.sendMessage(chatId, getCommands)
     }
 })
