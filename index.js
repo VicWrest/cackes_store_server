@@ -107,7 +107,12 @@ bot.on('callback_query', async msg => {
     bot.on('contact', async msg=> {
             const chatId = msg.chat.id;
         try {
-            await bot.sendMessage(chatId, `Ваш заказ принят! Благодарим Вас за заказ🎂🧁`);
+            await bot.sendMessage(chatId, 'Ваш заказ принят! Благодарим Вас за заказ🎂🧁', {
+                reply_markup: {
+                    remove_keyboard: true
+                }
+            })
+            //await bot.sendMessage(chatId, `Ваш заказ принят! Благодарим Вас за заказ🎂🧁`);
             await bot.sendContact(process.env.ADMIN_CHAT_ID, msg.contact.phone_number, `Контакт`);
         }
         catch(error) {
