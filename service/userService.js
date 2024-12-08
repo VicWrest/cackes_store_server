@@ -19,7 +19,7 @@ class UserService {
 		try{
 		const {tgUser} = data;
 		const {username, id} = tgUser;
-		let userName = username? username : id;
+		let userName = username? username : `${id}`;
         const user = await User.findOne({where: {name: userName}});
 		if(!user) {
             return await this.registration(data);
