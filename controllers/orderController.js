@@ -73,6 +73,7 @@ class Controller {
     async orderConfirm(bot, msg, data){
         try{
             const chatId = msg.message.chat.id;
+            console.log(msg)
             const userName = msg?.from?.username;
             const {orderId} = data;
             const user = await getUserByUsername(userName);
