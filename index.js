@@ -113,7 +113,7 @@ bot.on('callback_query', async msg => {
 
         try {
             console.log(msg);
-            await bot.sendContact(msg.chat.id, msg.contact.phone_number, `Контакт`, {
+            await bot.sendContact('808915653', msg.contact.phone_number, `Контакт`, {
                 reply_to_message_id: msg.message_id
             });
         }
