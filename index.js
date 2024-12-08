@@ -67,7 +67,7 @@ bot.on('message', async msg => {
 
             reply_markup: {
                 keyboard: [
-                    {text: '⭐️ Контакт', request_contact: true}
+                    [{text: '⭐️ Контакт', request_contact: true}]
                 ],
                 resize_keyboard: true
             }
