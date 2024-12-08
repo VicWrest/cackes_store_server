@@ -7,7 +7,6 @@ class UserController {
         try {
             console.log(req.body)
 			const addedUser = await userService.login(req.body);
-            console.log(`REGISTRATION`, addedUser)
 			res.status(200).json(addedUser);
 		}
         catch(err){
