@@ -74,7 +74,9 @@ class Controller {
         try{
             const chatId = msg.message.chat.id;
             console.log(msg)
-            const userName = msg?.from?.username;
+            const {username, id} = msg.from;
+            let userName =  username? username : id;
+            console.log(userName)
             const {orderId} = data;
             const user = await getUserByUsername(userName);
             await basketService.deleteAllProducts({user});
